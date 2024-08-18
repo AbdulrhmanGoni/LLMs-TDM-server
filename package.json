@@ -12,5 +12,8 @@
     "start:dev": "bun --watch src/index.ts",
     "dev": "bun --watch scripts/start-development-server.ts"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "mongoose": "^8.5.3"
+  }
 }
