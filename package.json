@@ -1,0 +1,16 @@
+{
+  "name": "llms-training-datasets-manager",
+  "module": "index.ts",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "start": "bun src/index.ts",
+    "start:dev": "bun --watch src/index.ts",
+    "dev": "bun --watch scripts/start-development-server.ts"
+  },
+  "type": "module"
+}
