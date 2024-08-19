@@ -1,5 +1,7 @@
+import type { Server } from "bun";
 import type { RequestHandler } from "../types/request";
 import registerRoute from "./registerRoute";
+import serveRequests from "./serveRequests";
 
 type RouteData = {
   handlers: RequestHandler[];
@@ -17,6 +19,10 @@ const RouterClass = (function () {
 
   class Router {
     constructor() {}
+
+    async serve(request: Request, _server: Server) {
+      return serveRequests(routes, request, _server);
+    }
 
     registerRoute(method: string, path: string, ...handlers: RequestHandler[]) {
       registerRoute(routes, method, path, ...handlers);
