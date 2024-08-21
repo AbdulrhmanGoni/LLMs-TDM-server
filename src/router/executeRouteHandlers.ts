@@ -1,5 +1,5 @@
-import extractRequestBody from "../lib/extractRequestBody";
-import extractSearchParams from "../lib/extractSearchParams";
+import extractRequestBody from "../utilities/extractRequestBody";
+import extractSearchParams from "../utilities/extractSearchParams";
 import type { PathParams, Req, RequestHandler } from "../types/request";
 
 export default async function executeRouteHandlers(
