@@ -22,7 +22,7 @@ export default function updateDatasetInputValidator(request: Req) {
     request.json = updateData;
     request.json.datasetId = datasetId;
   } catch (e: any) {
-    const validationErrors = e.errors as ValidationError;
+    const validationErrors = e.errors as ValidationError["errors"];
     return ErrorResponse({ validationErrors }, 403);
   }
 }

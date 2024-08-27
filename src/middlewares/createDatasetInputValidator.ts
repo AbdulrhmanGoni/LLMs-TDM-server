@@ -14,7 +14,7 @@ export default function createDatasetInputValidator(request: Req) {
   try {
     request.json = datasetInput.validate(request.json);
   } catch (e: any) {
-    const validationErrors = e.errors as ValidationError;
+    const validationErrors = e.errors as ValidationError["errors"];
     return ErrorResponse({ validationErrors }, 403);
   }
 }
