@@ -15,7 +15,7 @@ export default async function deleteDataset_controller(
     if (isSuccess) {
       return SuccessResponse(result, message);
     } else {
-      return ErrorResponse(message || "Dataset deletion failed", 400);
+      return ErrorResponse(message || "Dataset deletion failed");
     }
   } catch {
     return InternalServerErrorResponse();

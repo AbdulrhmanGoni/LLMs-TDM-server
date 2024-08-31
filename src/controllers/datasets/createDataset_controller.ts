@@ -15,7 +15,7 @@ export default async function createDataset_controller(
     if (isSuccess) {
       return SuccessResponse(result, message);
     } else {
-      return ErrorResponse(message || "Dataset creation failed", 400);
+      return ErrorResponse(message || "Dataset creation failed");
     }
   } catch {
     return InternalServerErrorResponse();
