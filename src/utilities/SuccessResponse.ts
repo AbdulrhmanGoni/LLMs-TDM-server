@@ -1,4 +1,4 @@
-export default function JsonResponse(
+export default function SuccessResponse(
   data?: Record<string, any> | string | boolean,
   message?: string,
   statusCode: number = 200,
