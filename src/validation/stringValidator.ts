@@ -2,6 +2,7 @@ import {
   isObjectId,
   isRequired,
   isString,
+  itContains,
   matches,
   maxLength,
   minLength,
@@ -43,6 +44,11 @@ export class StringValidator {
 
   objectId(message?: string): this {
     this.validator.addRule(isObjectId(message));
+    return this;
+  }
+
+  enum(values: string[]): this {
+    this.validator.addRule(itContains(values));
     return this;
   }
 }
