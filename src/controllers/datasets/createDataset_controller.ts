@@ -13,7 +13,7 @@ export default async function createDataset_controller(
     );
 
     if (isSuccess) {
-      return SuccessResponse(result, message);
+      return SuccessResponse(result, message, 201);
     } else {
       return ErrorResponse(message || "Dataset creation failed");
     }
