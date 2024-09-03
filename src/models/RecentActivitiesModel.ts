@@ -1,7 +1,7 @@
 import { Schema, Types, model } from "mongoose";
 
 const SharedSchema = {
-  datasetsId: {
+  datasetId: {
     type: Types.ObjectId,
     required: true,
   },
