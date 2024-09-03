@@ -55,6 +55,16 @@ function isObjectId(message?: string): ValidationRule<string> {
     isValidObjectId(value) || message || `"${value}" is not a valid "ObjectId"`;
 }
 
+function itContains(
+  values: (string | number | boolean)[],
+  message?: string
+): ValidationRule<string | number | boolean> {
+  return (value) =>
+    values.includes(value) ||
+    message ||
+    `"${value}" is not in [${values.join(", ")}] array"`;
+}
+
 export {
   isRequired,
   isString,
@@ -65,4 +75,5 @@ export {
   min,
   max,
   isObjectId,
+  itContains,
 };
