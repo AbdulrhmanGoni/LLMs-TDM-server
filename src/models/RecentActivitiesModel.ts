@@ -1,7 +1,7 @@
 import { Schema, Types, model } from "mongoose";
 
-const SharedSchema = {
-  datasetsId: {
+const ActivitySchema = {
+  datasetId: {
     type: Types.ObjectId,
     required: true,
   },
@@ -20,7 +20,7 @@ const RecentActivitiesSchema = new Schema(
     recentActivitiesOfInstructions: {
       type: [
         {
-          ...SharedSchema,
+          ...ActivitySchema,
           instructionId: {
             type: Types.ObjectId,
             required: true,
@@ -31,13 +31,13 @@ const RecentActivitiesSchema = new Schema(
       required: true,
     },
     recentActivitiesOfDatasets: {
-      type: [SharedSchema],
+      type: [ActivitySchema],
       default: [],
       required: true,
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
     versionKey: false,
   }
 );
