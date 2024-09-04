@@ -1,0 +1,30 @@
+services:
+  primary-mongodb: 
+    extends:
+      file: docker-compose-mongodb-replSet.yaml
+      service: primary-db
+    volumes:
+      - ./mongo:/data/db
+    networks:
+      - development-network
+    container_name: primary-dev-db
+
+  secondary-mongodb-1: 
+    extends:
+      file: docker-compose-mongodb-replSet.yaml
+      service: secondary-db-1
+    networks:
+      - development-network
+    container_name: secondary-dev-db-1
+
+  secondary-mongodb-2: 
+    extends:
+      file: docker-compose-mongodb-replSet.yaml
+      service: secondary-db-2
+    networks:
+      - development-network
+    container_name: secondary-dev-db-2
+
+networks:
+  development-network: 
+    driver: bridge
