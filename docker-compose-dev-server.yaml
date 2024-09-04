@@ -1,0 +1,19 @@
+services:
+  development-server: 
+    build: .
+    container_name: development-server-container
+    command: bun start
+    ports:
+      - 9000:9000
+    volumes:
+      - ./src:/llms-tdm/src:ro
+    env_file:
+      - .env.development
+    environment:
+      - NODE_ENV=development
+    networks:
+      - development-network
+
+networks:
+  development-network: 
+    driver: bridge
