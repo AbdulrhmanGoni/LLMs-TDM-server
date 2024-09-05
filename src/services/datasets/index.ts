@@ -4,6 +4,7 @@ import deleteDataset_service from "./deleteDataset_service";
 import updateDataset_service from "./updateDataset_service";
 import getDatasetsById_service from "./getDatasetById_service";
 import incrementInstructionsCount_service from "./incrementInstructionsCount_service";
+import datasetsOverview_service from "./datasetsOverview_service";
 
 class DatasetsService {
   constructor() {}
@@ -19,6 +20,8 @@ class DatasetsService {
   deleteDataset = deleteDataset_service;
 
   incrementInstructionsCount = incrementInstructionsCount_service;
+
+  datasetsOverview = datasetsOverview_service;
 }
 
 const datasetsService = new DatasetsService();
