@@ -2,6 +2,7 @@ import createDataset_controller from "./createDataset_controller";
 import getDatasets_controller from "./getDatasets_controller.ts";
 import deleteDataset_controller from "./deleteDataset_controller";
 import updateDataset_controller from "./updateDataset_controller";
+import datasetsOverview_controller from "./datasetsOverview_controller";
 
 class DatasetsController {
   constructor() {}
@@ -13,6 +14,8 @@ class DatasetsController {
   updateDataset = updateDataset_controller;
 
   deleteDataset = deleteDataset_controller;
+
+  datasetsOverview = datasetsOverview_controller;
 }
 
 const datasetsController = new DatasetsController();
