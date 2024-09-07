@@ -3,7 +3,7 @@ import DatasetModel from "../../models/DatasetModel";
 import type { Dataset } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 
-export default async function getDatasetsById_service(
+export default async function getDatasetById_service(
   id: Dataset["id"]
 ): Promise<ServiceOperationResultType<Dataset>> {
   const result = await DatasetModel.findById(id);

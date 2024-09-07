@@ -2,7 +2,7 @@ import createDataset_service from "./createDataset_service";
 import getDatasets_service from "./getDatasets_service";
 import deleteDataset_service from "./deleteDataset_service";
 import updateDataset_service from "./updateDataset_service";
-import getDatasetsById_service from "./getDatasetById_service";
+import getDatasetById_service from "./getDatasetById_service";
 import incrementInstructionsCount_service from "./incrementInstructionsCount_service";
 import datasetsOverview_service from "./datasetsOverview_service";
 
@@ -11,7 +11,7 @@ class DatasetsService {
 
   createDataset = createDataset_service;
 
-  getDatasetsById = getDatasetsById_service;
+  getDatasetById = getDatasetById_service;
 
   getDatasets = getDatasets_service;
 
