@@ -11,6 +11,8 @@ export default function datasetsRoutesRegisterer(router: RouterType): void {
 
   router.GET(`${baseRoute}/overview`, datasetsController.datasetsOverview);
 
+  router.GET(`${baseRoute}/:datasetId`, datasetsController.getDatasetById);
+
   router.POST(
     baseRoute,
     createDatasetInputValidator,
