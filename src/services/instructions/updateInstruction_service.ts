@@ -7,29 +7,31 @@ import type {
   UpdateInstructionInput,
 } from "../../types/instructions";
 import activitiesService from "../activities";
+import type { ServiceOperationResultType } from "../../types/response";
 
 export default async function updateInstruction_service(
   datasetId: Dataset["id"],
   instructionId: Instruction["id"],
   updateData: UpdateInstructionInput
-) {
+): Promise<ServiceOperationResultType<Instruction>> {
   const { Model, failure } = await InstructionModel(datasetId);
 
   if (Model) {
-    const theInstruction = await Model.findOneAndUpdate(
+    const updatedInstruction = await Model.findOneAndUpdate(
       { _id: instructionId },
-      updateData
+      updateData,
+      { new: true }
     );
 
-    if (theInstruction) {
+    if (updatedInstruction) {
       activitiesService.registerInstructionActivity(
         new Types.ObjectId(datasetId),
-        theInstruction._id,
-        theInstruction.updatedAt,
+        updatedInstruction._id,
+        updatedInstruction.updatedAt,
         "Modification"
       );
       return ServiceOperationResult.success(
-        true,
+        updatedInstruction,
         "The instruction updated successfully"
       );
     }

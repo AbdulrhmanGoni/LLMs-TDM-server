@@ -6,6 +6,6 @@ export default async function getDatasets_service(): Promise<ServiceOperationRes
   const result = await DatasetModel.find({});
   return ServiceOperationResult.success(
     result,
-    result.length ? undefined : "There is no datasets yet"
+    result.length ? undefined : "There are no datasets yet"
   );
 }

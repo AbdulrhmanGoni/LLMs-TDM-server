@@ -9,18 +9,20 @@ export default async function updateDataset_service(
   updateData: UpdateDatasetInput
 ): Promise<ServiceOperationResultType> {
   const filter = { _id: datasetId };
-  const dataset = await DatasetModel.findOneAndUpdate(filter, updateData, {
-    new: true,
-  });
+  const updateDataset = await DatasetModel.findOneAndUpdate(
+    filter,
+    updateData,
+    { new: true }
+  );
 
-  if (dataset) {
+  if (updateDataset) {
     activitiesService.registerDatasetActivity(
-      dataset._id,
-      dataset.updatedAt,
+      updateDataset._id,
+      updateDataset.updatedAt,
       "Modification"
     );
     return ServiceOperationResult.success(
-      updateData,
+      updateDataset,
       `The dataset updated successfully`
     );
   } else {
