@@ -10,7 +10,7 @@
   "scripts": {
     "start": "bun src/index.ts",
     "start:dev": "bun --watch src/index.ts",
-    "dev": "bun --watch scripts/start-development-server.ts"
+    "dev": "bun scripts/startDevelopmentServer.ts"
   },
   "type": "module",
   "dependencies": {
