@@ -6,6 +6,8 @@ services:
     networks:
       - testing-network
     container_name: primary-test-db
+    ports:
+      - 27011:27017
 
   secondary-mongodb-1: 
     extends:
@@ -14,6 +16,8 @@ services:
     networks:
       - testing-network
     container_name: secondary-test-db-1
+    ports:
+      - 27012:27017
 
   secondary-mongodb-2: 
     extends:
@@ -22,6 +26,8 @@ services:
     networks:
       - testing-network
     container_name: secondary-test-db-2
+    ports:
+      - 27013:27017
 
 networks:
   testing-network: 

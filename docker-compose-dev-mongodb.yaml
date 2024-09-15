@@ -8,6 +8,8 @@ services:
     networks:
       - development-network
     container_name: primary-dev-db
+    ports:
+      - 27001:27017
 
   secondary-mongodb-1: 
     extends:
@@ -16,6 +18,8 @@ services:
     networks:
       - development-network
     container_name: secondary-dev-db-1
+    ports:
+      - 27002:27017
 
   secondary-mongodb-2: 
     extends:
@@ -24,6 +28,8 @@ services:
     networks:
       - development-network
     container_name: secondary-dev-db-2
+    ports:
+      - 27003:27017
 
 networks:
   development-network: 

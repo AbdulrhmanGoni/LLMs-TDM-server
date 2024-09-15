@@ -4,20 +4,14 @@ services:
     container_name: primary-db-container
     volumes:
       - ./scripts/initializingReplSetScript.js:/scripts/initializingReplSetScript.js
-    ports:
-      - 27001:27017
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "llms-tdm-set" ]
 
   secondary-db-1: 
     image: mongo
     container_name: secondary-db-container-1
-    ports:
-      - 27002:27017
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "llms-tdm-set" ]
 
   secondary-db-2: 
     image: mongo
     container_name: secondary-db-container-2
-    ports:
-      - 27003:27017
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "llms-tdm-set" ]
