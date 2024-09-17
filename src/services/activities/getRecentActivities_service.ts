@@ -136,8 +136,7 @@ async function queryDatasetsInstructions(
     const { isSuccess, result } =
       await instructionsService.getInstructionsByIds(
         key,
-        datasetsInstructionsMap[key],
-        { projection: { createdAt: 0, updatedAt: 0 } }
+        datasetsInstructionsMap[key]
       );
 
     if (isSuccess && result) {
