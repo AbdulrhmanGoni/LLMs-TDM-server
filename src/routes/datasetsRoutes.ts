@@ -3,6 +3,7 @@ import type { RouterType } from "../router/Router";
 import createDatasetInputValidator from "../middlewares/createDatasetInputValidator";
 import deleteDatasetInputValidator from "../middlewares/deleteDatasetInputValidator";
 import updateDatasetInputValidator from "../middlewares/updateDatasetInputValidator";
+import getDatasetByIdInputValidator from "../middlewares/getDatasetByIdInputValidator";
 
 export default function datasetsRoutesRegisterer(router: RouterType): void {
   const baseRoute = "/datasets";
@@ -11,7 +12,11 @@ export default function datasetsRoutesRegisterer(router: RouterType): void {
 
   router.GET(`${baseRoute}/overview`, datasetsController.datasetsOverview);
 
-  router.GET(`${baseRoute}/:datasetId`, datasetsController.getDatasetById);
+  router.GET(
+    `${baseRoute}/:datasetId`,
+    getDatasetByIdInputValidator,
+    datasetsController.getDatasetById
+  );
 
   router.POST(
     baseRoute,
