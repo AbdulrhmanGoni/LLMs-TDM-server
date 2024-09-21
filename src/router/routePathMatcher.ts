@@ -2,10 +2,10 @@ import type { PathParams } from "../types/request";
 import extractResourceName from "./extractResourceName";
 import type { RoutesHandlersRegistery } from "./Router";
 
-export default function routePathMatcher(
+export default function routePathMatcher<HandlersT>(
   method: string,
   path: string,
-  routes: RoutesHandlersRegistery
+  routes: RoutesHandlersRegistery<HandlersT>
 ) {
   if (routes[method]) {
     const resourceName = extractResourceName(path);

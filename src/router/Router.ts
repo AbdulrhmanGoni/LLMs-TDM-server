@@ -26,7 +26,7 @@ const RouterClass = (function () {
     }
 
     registerRoute(method: string, path: string, ...handlers: RequestHandler[]) {
-      registerRoute(routes, method, path, ...handlers);
+      registerRoute<RequestHandler>(routes, method, path, ...handlers);
     }
 
     GET(path: string, ...handlers: RequestHandler[]) {
