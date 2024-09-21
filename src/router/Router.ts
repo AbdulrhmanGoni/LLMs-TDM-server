@@ -48,6 +48,10 @@ const RouterClass = (function () {
     PATCH(path: string, ...handlers: RequestHandler[]) {
       this.registerRoute(this.PATCH.name, path, ...handlers);
     }
+
+    WS(path: string, ...handlers: WebSocketHandlers[]) {
+      registerRoute(websocketRoutes, "WS", path, ...handlers);
+    }
   }
 
   return Router;
