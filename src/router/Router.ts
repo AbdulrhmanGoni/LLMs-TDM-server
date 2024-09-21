@@ -21,8 +21,8 @@ const RouterClass = (function () {
   class Router {
     constructor() {}
 
-    async serve(request: Request, _server: Server) {
-      return serveRequests(routes, request, _server);
+    async serve(request: Request, server: Server) {
+      return serveRequests(request, server, routes, websocketRoutes);
     }
 
     registerRoute(method: string, path: string, ...handlers: RequestHandler[]) {
