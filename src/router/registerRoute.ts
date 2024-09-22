@@ -1,12 +1,11 @@
-import type { RequestHandler } from "../types/request";
 import extractResourceName from "./extractResourceName";
 import type { RoutesHandlersRegistery } from "./Router";
 
-export default function registerRoute(
-  routes: RoutesHandlersRegistery,
+export default function registerRoute<HandlersT>(
+  routes: RoutesHandlersRegistery<HandlersT>,
   method: string,
   path: string,
-  ...handlers: RequestHandler[]
+  ...handlers: HandlersT[]
 ) {
   const paramsNames: string[] = [];
   const regexPath = path.replace(/:([^\/]+)/g, (_, key: string) => {

@@ -1,31 +1,32 @@
 import type { Server } from "bun";
-import type { RequestHandler } from "../types/request";
+import type { RequestHandler, WebSocketHandlers } from "../types/request";
 import registerRoute from "./registerRoute";
 import serveRequests from "./serveRequests";
 
-type RouteData = {
-  handlers: RequestHandler[];
+type RouteData<handlersT> = {
+  handlers: handlersT[];
   pathRegExp: RegExp;
   paramsNames: string[];
 };
 
-export type RoutesHandlersRegistery = Record<
+export type RoutesHandlersRegistery<handlersT> = Record<
   string,
-  Record<string, RouteData[]>
+  Record<string, RouteData<handlersT>[]>
 >;
 
 const RouterClass = (function () {
-  const routes: RoutesHandlersRegistery = {};
+  const routes: RoutesHandlersRegistery<RequestHandler> = {};
+  const websocketRoutes: RoutesHandlersRegistery<WebSocketHandlers> = {};
 
   class Router {
     constructor() {}
 
-    async serve(request: Request, _server: Server) {
-      return serveRequests(routes, request, _server);
+    async serve(request: Request, server: Server) {
+      return serveRequests(request, server, routes, websocketRoutes);
     }
 
     registerRoute(method: string, path: string, ...handlers: RequestHandler[]) {
-      registerRoute(routes, method, path, ...handlers);
+      registerRoute<RequestHandler>(routes, method, path, ...handlers);
     }
 
     GET(path: string, ...handlers: RequestHandler[]) {
@@ -46,6 +47,10 @@ const RouterClass = (function () {
 
     PATCH(path: string, ...handlers: RequestHandler[]) {
       this.registerRoute(this.PATCH.name, path, ...handlers);
+    }
+
+    WS(path: string, ...handlers: WebSocketHandlers[]) {
+      registerRoute(websocketRoutes, "WS", path, ...handlers);
     }
   }
 
