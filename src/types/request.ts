@@ -12,7 +12,7 @@ export interface Req extends Request {
 
 export type RequestHandler = (
   request: Req
-) => Promise<Response> | Response | void;
+) => Promise<Response | void> | Response | void;
 
 export type WebSocketHandlers = (
   wsClient: ServerWebSocket<{ req: Req; handlers: WebSocketHandlers[] }>
