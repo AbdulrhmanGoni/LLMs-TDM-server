@@ -52,7 +52,7 @@ function max(
 
 function isObjectId(message?: string): ValidationRule<string> {
   return (value) =>
-    isValidObjectId(value) || message || `"${value}" is not a valid "ObjectId"`;
+    isValidObjectId(value) || message || `"${value}" is not a valid id`;
 }
 
 function itContains(
