@@ -4,10 +4,12 @@ import datasetsService from "../../services/datasets";
 import type { Req } from "../../types/request";
 
 export default async function datasetsOverview_controller(
-  _request: Req
+  request: Req
 ): Promise<Response> {
   try {
-    const { result, message } = await datasetsService.datasetsOverview();
+    const { result, message } = await datasetsService.datasetsOverview(
+      request.userId
+    );
     return SuccessResponse(result, message);
   } catch {
     return InternalServerErrorResponse();
