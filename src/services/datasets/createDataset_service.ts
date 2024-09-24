@@ -1,40 +1,39 @@
-import mongoose from "mongoose";
 import createTransactionSession from "../../utilities/createTransactionSession";
-import DatasetModel from "../../models/DatasetModel";
+import DatasetsModel, { DatasetDocument } from "../../models/DatasetsModel";
 import type { DatasetInput } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import activitiesService from "../activities";
 
 export default async function createDataset_service(
+  userId: string,
   dataset: DatasetInput
 ): Promise<ServiceOperationResultType> {
   const session = await createTransactionSession();
 
-  const newDataset = new DatasetModel(dataset);
-  const datasetAdded = await newDataset
-    .save({ session })
+  const newDataset = new DatasetDocument(dataset);
+
+  const datasetAdded = await DatasetsModel.updateOne(
+    { _id: userId },
+    { $push: { datasets: newDataset } },
+    { upsert: true, session }
+  )
     .then(() => true)
     .catch(() => false);
 
   if (datasetAdded) {
-    const collectionCreated = await mongoose.connection
-      .createCollection(newDataset.id, { session })
-      .then(() => true)
-      .catch(() => false);
+    await session.commitTransaction();
+    activitiesService.registerDatasetActivity(
+      userId,
+      newDataset._id,
+      newDataset.createdAt,
+      "New Resource"
+    );
 
-    if (collectionCreated) {
-      await session.commitTransaction();
-      activitiesService.registerDatasetActivity(
-        newDataset._id,
-        newDataset.createdAt,
-        "New Resource"
-      );
-      return ServiceOperationResult.success(
-        newDataset,
-        `"${dataset.name}" dataset created successfuly`
-      );
-    }
+    return ServiceOperationResult.success(
+      newDataset,
+      `"${newDataset.name}" dataset created successfuly`
+    );
   }
 
   await session.abortTransaction();

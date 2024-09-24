@@ -9,6 +9,7 @@ export default async function createDataset_controller(
 ): Promise<Response> {
   try {
     const { message, isSuccess, result } = await datasetsService.createDataset(
+      request.userId,
       request.json
     );
 
