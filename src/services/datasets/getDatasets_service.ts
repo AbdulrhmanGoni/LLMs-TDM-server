@@ -7,14 +7,8 @@ export default async function getDatasets_service(
 ): Promise<ServiceOperationResultType> {
   const result = await DatasetsModel.findOne({ _id: userId });
 
-  if (result) {
-    return ServiceOperationResult.success(
-      result?.datasets,
-      result?.datasets.length ? undefined : "There are no datasets yet"
-    );
-  }
-
-  return ServiceOperationResult.failure(
-    `There is no user found with "${userId}" id`
+  return ServiceOperationResult.success(
+    result?.datasets || [],
+    result?.datasets.length ? undefined : "There are no datasets yet"
   );
 }
