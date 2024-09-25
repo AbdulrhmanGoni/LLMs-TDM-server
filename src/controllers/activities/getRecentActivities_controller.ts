@@ -5,11 +5,11 @@ import type { Req } from "../../types/request";
 import activitiesService from "../../services/activities";
 
 export default async function getRecentActivities_controller(
-  _request: Req
+  request: Req
 ): Promise<Response> {
   try {
     const { message, isSuccess, result } =
-      await activitiesService.getRecentActivities();
+      await activitiesService.getRecentActivities(request.userId);
 
     if (isSuccess) {
       return SuccessResponse(result, message);
