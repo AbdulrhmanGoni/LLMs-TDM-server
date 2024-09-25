@@ -8,6 +8,7 @@ export default async function getDatasetById_controller(
 ): Promise<Response> {
   try {
     const { result, message } = await datasetsService.getDatasetById(
+      request.userId,
       request.params.datasetId
     );
     return SuccessResponse(result, message);
