@@ -9,6 +9,7 @@ export default async function updateDataset_controller(
 ): Promise<Response> {
   try {
     const { message, isSuccess, result } = await datasetsService.updateDataset(
+      request.userId,
       request.params.datasetId,
       request.json
     );
