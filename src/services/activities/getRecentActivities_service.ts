@@ -23,12 +23,15 @@ type AggregationResultType = {
   instructionsActivities: InstructionActivityFromPipeline[];
 };
 
-export default async function getRecentActivities_service(): Promise<ServiceOperationResultType> {
+export default async function getRecentActivities_service(
+  userId: string
+): Promise<ServiceOperationResultType> {
   const [result] = await RecentActivitiesModel.aggregate<AggregationResultType>(
     [
       {
         $facet: {
           datasetsActivities: [
+            { $match: { _id: userId } },
             { $unwind: "$recentActivitiesOfDatasets" },
             { $replaceRoot: { newRoot: "$recentActivitiesOfDatasets" } },
             {
@@ -37,6 +40,9 @@ export default async function getRecentActivities_service(): Promise<ServiceOper
                 let: { targetId: "$datasetId" },
                 as: "dataset",
                 pipeline: [
+                  { $match: { _id: userId } },
+                  { $unwind: "$datasets" },
+                  { $replaceRoot: { newRoot: "$datasets" } },
                   { $match: { $expr: { $eq: ["$_id", "$$targetId"] } } },
                 ],
               },
@@ -50,6 +56,7 @@ export default async function getRecentActivities_service(): Promise<ServiceOper
             },
           ],
           instructionsActivities: [
+            { $match: { _id: userId } },
             { $unwind: "$recentActivitiesOfInstructions" },
             { $replaceRoot: { newRoot: "$recentActivitiesOfInstructions" } },
             {
@@ -58,6 +65,9 @@ export default async function getRecentActivities_service(): Promise<ServiceOper
                 let: { targetId: "$datasetId" },
                 as: "dataset",
                 pipeline: [
+                  { $match: { _id: userId } },
+                  { $unwind: "$datasets" },
+                  { $replaceRoot: { newRoot: "$datasets" } },
                   { $match: { $expr: { $eq: ["$_id", "$$targetId"] } } },
                 ],
               },
