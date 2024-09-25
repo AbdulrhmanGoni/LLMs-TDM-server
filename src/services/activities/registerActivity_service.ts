@@ -5,21 +5,25 @@ import type { ServiceOperationResultType } from "../../types/response";
 
 export default async function registerActivity_service(
   resourceName: ActivityResource,
-  activity: Activity
+  activity: Activity,
+  userId: string
 ): Promise<ServiceOperationResultType> {
-  const updateQuery = [
-    {
-      $set: {
-        [`recentActivitiesOf${resourceName}`]: {
-          $concatArrays: [
-            [activity],
-            { $slice: [`$recentActivitiesOf${resourceName}`, 4] },
-          ],
-        },
+  const updateQuery = {
+    $push: {
+      [`recentActivitiesOf${resourceName}`]: {
+        $each: [activity],
+        $position: 0,
+        $slice: 5,
       },
     },
-  ];
-  const result = await RecentActivitiesModel.updateOne({}, updateQuery);
+  };
+
+  const result = await RecentActivitiesModel.updateOne(
+    { _id: userId },
+    updateQuery,
+    { upsert: true }
+  );
+
   if (result.modifiedCount) {
     return ServiceOperationResult.success(true);
   }
