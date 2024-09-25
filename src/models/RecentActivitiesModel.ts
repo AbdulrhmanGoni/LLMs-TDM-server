@@ -13,6 +13,10 @@ const ActivitySchema = {
     type: Date,
     required: true,
   },
+  deletedResource: {
+    type: Schema.Types.Mixed,
+    required: true,
+  },
 };
 
 const RecentActivitiesSchema = new Schema(
