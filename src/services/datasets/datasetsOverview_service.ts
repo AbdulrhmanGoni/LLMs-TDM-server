@@ -31,5 +31,12 @@ export default async function datasetsOverview_service(
     },
   ]);
 
-  return ServiceOperationResult.success(result ? result : {});
+  return ServiceOperationResult.success(
+    result
+      ? result
+      : {
+          totalDatasets: 0,
+          addedDatasetsLastMonth: 0,
+        }
+  );
 }
