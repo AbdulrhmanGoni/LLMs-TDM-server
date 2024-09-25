@@ -9,6 +9,7 @@ export default async function deleteDataset_controller(
 ): Promise<Response> {
   try {
     const { message, isSuccess, result } = await datasetsService.deleteDataset(
+      request.userId,
       request.params.datasetId
     );
 
