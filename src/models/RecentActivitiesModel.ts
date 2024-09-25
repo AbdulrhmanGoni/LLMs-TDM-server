@@ -17,6 +17,10 @@ const ActivitySchema = {
 
 const RecentActivitiesSchema = new Schema(
   {
+    _id: {
+      type: String,
+      required: true,
+    },
     recentActivitiesOfInstructions: {
       type: [
         {
