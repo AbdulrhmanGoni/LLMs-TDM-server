@@ -21,7 +21,7 @@ const RecentActivitiesSchema = new Schema(
       type: String,
       required: true,
     },
-    recentActivitiesOfInstructions: {
+    instructionsActivities: {
       type: [
         {
           ...ActivitySchema,
@@ -34,7 +34,7 @@ const RecentActivitiesSchema = new Schema(
       default: [],
       required: true,
     },
-    recentActivitiesOfDatasets: {
+    datasetsActivities: {
       type: [ActivitySchema],
       default: [],
       required: true,
