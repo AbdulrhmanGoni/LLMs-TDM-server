@@ -15,17 +15,11 @@ export default async function getDatasetById_service(
     { "datasets.$": 1 }
   );
 
-  if (result) {
-    if (result.datasets[0]) {
-      return ServiceOperationResult.success(result.datasets[0]);
-    } else {
-      return ServiceOperationResult.failure(
-        `There is no dataset with "${datasetId}" id`
-      );
-    }
+  if (result?.datasets[0]) {
+    return ServiceOperationResult.success(result.datasets[0]);
   } else {
     return ServiceOperationResult.failure(
-      `There is no user with "${userId}" id`
+      `There is no dataset with "${datasetId}" id`
     );
   }
 }
