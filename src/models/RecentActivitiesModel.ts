@@ -1,8 +1,8 @@
-import { Schema, Types, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const ActivitySchema = {
-  datasetId: {
-    type: Types.ObjectId,
+  dataset: {
+    type: Schema.Types.Mixed,
     required: true,
   },
   activity: {
@@ -11,10 +11,6 @@ const ActivitySchema = {
   },
   activityDate: {
     type: Date,
-    required: true,
-  },
-  deletedResource: {
-    type: Schema.Types.Mixed,
     required: true,
   },
 };
@@ -29,8 +25,8 @@ const RecentActivitiesSchema = new Schema(
       type: [
         {
           ...ActivitySchema,
-          instructionId: {
-            type: Types.ObjectId,
+          instruction: {
+            type: Schema.Types.Mixed,
             required: true,
           },
         },
