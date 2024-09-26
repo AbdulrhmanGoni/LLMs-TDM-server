@@ -1,10 +1,9 @@
-import { Types } from "mongoose";
-import type { ActivitiesTypes } from "../../types/activities";
+import type { ActivitiesTypes, DatasetActivity } from "../../types/activities";
 import registerActivity_service from "./registerActivity_service";
 
 export default async function registerDatasetActivity_service(
   userId: string,
-  datasetId: Types.ObjectId | string,
+  dataset: DatasetActivity["dataset"],
   activityDate: Date,
   activity: ActivitiesTypes
 ) {
@@ -12,10 +11,7 @@ export default async function registerDatasetActivity_service(
     await registerActivity_service(
       "Datasets",
       {
-        datasetId:
-          typeof datasetId === "string"
-            ? new Types.ObjectId(datasetId)
-            : datasetId,
+        dataset,
         activityDate,
         activity,
       },
