@@ -13,10 +13,8 @@ export default async function incrementInstructionsCount_service(
   const result = await DatasetModel.updateOne(
     { _id: userId },
     {
-      $set: {
-        [`datasets.$[dataset].instructionsCount`]: {
-          $sum: [`$datasets.$[dataset].instructionsCount`, incrementValue],
-        },
+      $inc: {
+        "datasets.$[dataset].instructionsCount": incrementValue,
       },
     },
     {
