@@ -8,21 +8,37 @@ export default async function deleteDataset_service(
   userId: string,
   datasetId: Dataset["id"]
 ): Promise<ServiceOperationResultType> {
-  const result = await DatasetsModel.updateOne(
+  const result = await DatasetsModel.findByIdAndUpdate(
     { _id: userId },
-    { $pull: { datasets: { _id: datasetId } } }
+    { $pull: { datasets: { _id: datasetId } } },
+    { projection: { datasets: 1 } }
   );
 
-  if (result.modifiedCount) {
-    activitiesService.unregisterDatasetActivity(userId, datasetId);
-    return ServiceOperationResult.success(
-      true,
-      `The dataset was deleted successfully`
+  if (result) {
+    const deletedDataset = result.datasets.find(
+      (dataset) => dataset.id === datasetId
     );
-  } else if (result.matchedCount) {
-    return ServiceOperationResult.failure(
-      `There is no dataset with "${datasetId}" id`
-    );
+
+    if (deletedDataset) {
+      activitiesService.registerDatasetActivity(
+        userId,
+        {
+          name: deletedDataset.name,
+          description: deletedDataset.description,
+          _id: deletedDataset._id,
+        },
+        new Date(),
+        "Deletion"
+      );
+      return ServiceOperationResult.success(
+        true,
+        `The dataset was deleted successfully`
+      );
+    } else {
+      return ServiceOperationResult.failure(
+        `There is no dataset with "${datasetId}" id`
+      );
+    }
   } else {
     return ServiceOperationResult.failure(
       `There is no user with "${userId}" id`

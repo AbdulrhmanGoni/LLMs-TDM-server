@@ -25,7 +25,11 @@ export default async function createDataset_service(
     await session.commitTransaction();
     activitiesService.registerDatasetActivity(
       userId,
-      newDataset._id,
+      {
+        _id: newDataset._id,
+        name: newDataset.name,
+        description: newDataset.description,
+      },
       newDataset.createdAt,
       "New Resource"
     );

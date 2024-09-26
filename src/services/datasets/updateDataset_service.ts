@@ -1,4 +1,3 @@
-import { Types } from "mongoose";
 import DatasetModel from "../../models/DatasetsModel";
 import type { Dataset, UpdateDatasetInput } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
@@ -26,17 +25,33 @@ export default async function updateDataset_service(
   );
 
   if (result) {
-    activitiesService.registerDatasetActivity(
-      userId,
-      new Types.ObjectId(datasetId),
-      new Date(),
-      "Modification"
+    const updatedDataset = result.datasets.find(
+      (dataset) => dataset.id === datasetId
     );
-    return ServiceOperationResult.success(
-      result.datasets.find((dataset) => dataset.id === datasetId),
-      `The dataset updated successfully`
-    );
+
+    if (updatedDataset) {
+      activitiesService.registerDatasetActivity(
+        userId,
+        {
+          description: updatedDataset.description,
+          name: updatedDataset.name,
+          _id: updatedDataset._id,
+        },
+        new Date(),
+        "Modification"
+      );
+      return ServiceOperationResult.success(
+        result.datasets.find((dataset) => dataset.id === datasetId),
+        `The dataset updated successfully`
+      );
+    } else {
+      return ServiceOperationResult.failure(
+        `There is no dataset with "${datasetId}" id`
+      );
+    }
   } else {
-    return ServiceOperationResult.failure(`Dataset not found to update`);
+    return ServiceOperationResult.failure(
+      `There is no user with "${userId}" id`
+    );
   }
 }
