@@ -5,7 +5,7 @@ export type PathParams = Record<string, any>;
 
 export interface Req extends Request {
   search: SearchParams;
-  userId?: any;
+  userId: string;
   params: PathParams;
   json: any;
 }

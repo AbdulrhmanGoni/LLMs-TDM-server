@@ -1,7 +1,7 @@
 import type { Dataset } from "./datasets";
 
 export type InstructionBase = {
-  systemMessage?: string;
+  systemMessage?: string | null;
   question: string;
   answer: string;
 };
