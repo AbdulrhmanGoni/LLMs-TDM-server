@@ -1,12 +1,14 @@
 import type { InstructionBase } from "./instructions";
 
-export type DatasetInput = {
+export type DatasetBase = {
   name: string;
   description: string;
 };
 
-export type UpdateDatasetInput = DatasetInput;
-export type Dataset = DatasetInput & {
+export type DatasetInput = DatasetBase;
+export type UpdateDatasetInput = DatasetBase;
+
+export type Dataset = DatasetBase & {
   id: string;
   instructionsCount: number;
   createdAt: Date;
