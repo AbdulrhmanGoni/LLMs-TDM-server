@@ -14,8 +14,8 @@ export default async function getRecentActivities_service(
     result
       ? result
       : {
-          recentActifitiesOfDatasets: [],
-          recentActivitiesOfInstructions: [],
+          datasetsActivities: [],
+          instructionsActivities: [],
         }
   );
 }
