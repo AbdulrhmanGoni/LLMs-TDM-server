@@ -8,52 +8,53 @@ import activitiesService from "../activities";
 import datasetsService from "../datasets";
 
 export default async function deleteInstruction_service(
+  userId: string,
   datasetId: Dataset["id"],
   instructionId: Instruction["id"]
 ): Promise<ServiceOperationResultType> {
   const session = await createTransactionSession();
 
-  const { Model, failure } = await InstructionModel(datasetId);
+  const instruction = await InstructionModel.findByIdAndDelete(instructionId, {
+    session,
+  });
 
-  if (Model) {
-    const deletionResults = await Model.deleteOne(
-      { _id: instructionId },
-      { session }
-    );
+  if (instruction) {
+    const incrementInstructionsCountResult =
+      await datasetsService.incrementInstructionsCount(
+        userId,
+        datasetId,
+        -1,
+        session
+      );
 
-    if (deletionResults.deletedCount) {
-      const incrementInstructionsCountResult =
-        await datasetsService.incrementInstructionsCount(
-          datasetId,
-          -1,
-          session
-        );
-
-      if (incrementInstructionsCountResult.isSuccess) {
-        await session.commitTransaction();
-        activitiesService.unregisterInstructionActivity(
-          datasetId,
-          instructionId
-        );
-        return ServiceOperationResult.success(
-          true,
-          `The instruction deleted from the dataset successfully`
-        );
-      }
-    }
-
-    if (deletionResults.acknowledged) {
+    if (incrementInstructionsCountResult.isSuccess) {
+      activitiesService.registerInstructionActivity(
+        userId,
+        datasetId,
+        {
+          _id: instruction._id,
+          systemMessage: instruction.systemMessage,
+          question: instruction.question,
+          answer: instruction.answer,
+        },
+        new Date(),
+        "Deletion"
+      );
+      await session.commitTransaction();
+      return ServiceOperationResult.success(
+        true,
+        `The instruction deleted from the dataset successfully`
+      );
+    } else {
       await session.abortTransaction();
       return ServiceOperationResult.failure(
-        `The targeted instruction not found to delete it from the dataset`
+        `Deleting the instruction from the dataset failed`
       );
     }
-
+  } else {
     await session.abortTransaction();
     return ServiceOperationResult.failure(
-      `Deleting the instruction from the dataset failed`
+      `The targeted instruction not found to delete it from the dataset`
     );
-  } else {
-    return failure;
   }
 }

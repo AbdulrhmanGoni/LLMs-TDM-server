@@ -9,7 +9,7 @@ export default async function addInstruction_controller(
 ): Promise<Response> {
   try {
     const { result, isSuccess, message } =
-      await instructionsService.addInstruction(request.json);
+      await instructionsService.addInstruction(request.userId, request.json);
 
     if (isSuccess) {
       return SuccessResponse(result, message);

@@ -10,6 +10,7 @@ export default async function updateInstruction_controller(
   try {
     const { isSuccess, message, result } =
       await instructionsService.updateInstruction(
+        request.userId,
         request.search.datasetId,
         request.search.instructionId,
         request.json
