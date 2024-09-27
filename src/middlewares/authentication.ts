@@ -3,13 +3,13 @@ import ErrorResponse from "../utilities/ErrorResponse";
 import InternalServerErrorResponse from "../utilities/InternalServerErrorResponse";
 import type { Req } from "../types/request";
 
+const clerkClient = createClerkClient({
+  secretKey: process.env.CLERK_SECRET_KEY,
+  publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+});
+
 export default async function authentication(request: Req) {
   try {
-    const clerkClient = createClerkClient({
-      secretKey: process.env.CLERK_SECRET_KEY,
-      publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
-    });
-
     const { isSignedIn, toAuth } = await clerkClient.authenticateRequest(
       request,
       {
