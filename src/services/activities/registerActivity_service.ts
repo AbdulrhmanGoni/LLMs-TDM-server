@@ -10,7 +10,7 @@ export default async function registerActivity_service(
 ): Promise<ServiceOperationResultType> {
   const updateQuery = {
     $push: {
-      [`recentActivitiesOf${resourceName}`]: {
+      [`${resourceName.toLowerCase()}Activities`]: {
         $each: [activity],
         $position: 0,
         $slice: 5,
