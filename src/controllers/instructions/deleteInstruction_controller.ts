@@ -10,6 +10,7 @@ export default async function deleteInstruction_controller(
   try {
     const { result, isSuccess, message } =
       await instructionsService.deleteInstruction(
+        request.userId,
         request.search.datasetId,
         request.search.instructionId
       );
