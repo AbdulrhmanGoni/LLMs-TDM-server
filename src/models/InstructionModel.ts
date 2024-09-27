@@ -16,6 +16,7 @@ const InstructionSchema = new Schema(
     datasetId: {
       type: Types.ObjectId,
       required: true,
+      index: true,
     },
   },
   {
