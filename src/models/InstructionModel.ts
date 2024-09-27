@@ -1,6 +1,4 @@
-import mongoose, { Schema, Types, model } from "mongoose";
-import type { Dataset } from "../types/datasets";
-import ServiceOperationResult from "../utilities/ServiceOperationResult";
+import { Schema, Types, model } from "mongoose";
 
 const InstructionSchema = new Schema(
   {
@@ -26,18 +24,6 @@ const InstructionSchema = new Schema(
   }
 );
 
-export default async function InstructionModel(datasetId: Dataset["id"]) {
-  const collectionExists = (await mongoose.connection.listCollections()).some(
-    (collection) => collection.name === datasetId
-  );
+const InstructionModel = model("instructions", InstructionSchema);
 
-  if (collectionExists) {
-    return { Model: model(datasetId, InstructionSchema, datasetId) };
-  }
-
-  return {
-    failure: ServiceOperationResult.failure(
-      "There is no dataset with this id: " + datasetId
-    ),
-  };
-}
+export default InstructionModel;
