@@ -2,11 +2,12 @@ import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import DatasetModel from "../../models/DatasetsModel";
 import type { Dataset } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
+import type { Types } from "mongoose";
 
 export default async function getDatasetById_service(
   userId: string,
   datasetId: Dataset["id"]
-): Promise<ServiceOperationResultType<Dataset>> {
+): Promise<ServiceOperationResultType<Dataset & { _id: Types.ObjectId }>> {
   const result = await DatasetModel.findOne(
     {
       _id: userId,
