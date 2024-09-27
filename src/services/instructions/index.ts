@@ -3,6 +3,7 @@ import getInstructions_service from "./getInstructions_service";
 import getInstructionsByIds_service from "./getInstructionsByIds_service";
 import deleteInstruction_service from "./deleteInstruction_service";
 import updateInstruction_service from "./updateInstruction_service";
+import deleteAllDatasetInstructions_service from "./deleteAllDatasetInstructions_service";
 
 class InstructionsService {
   constructor() {}
@@ -16,6 +17,8 @@ class InstructionsService {
   updateInstruction = updateInstruction_service;
 
   deleteInstruction = deleteInstruction_service;
+
+  deleteAllDatasetInstructions = deleteAllDatasetInstructions_service;
 }
 
 const instructionsService = new InstructionsService();
