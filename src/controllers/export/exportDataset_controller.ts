@@ -14,6 +14,7 @@ export default async function exportDataset_controller(
       isSuccess,
       result: Stream,
     } = await exportService.exportDataset(
+      request.userId,
       request.params.datasetId,
       formaters[request.search.format as DatasetsFormatsTypes]
     );
