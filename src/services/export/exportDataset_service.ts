@@ -11,15 +11,19 @@ export default async function exportDataset_service(
 ): Promise<ServiceOperationResultType<ReadableStream>> {
   const Stream = new ReadableStream({
     async pull(controller) {
-      await datasetInstructionsStream_service({
-        userId,
-        datasetId,
-        datasetFormat,
-        onChunk(chunk, _progress, done) {
-          controller.enqueue(chunk);
-          done && controller.close();
-        },
-      });
+      try {
+        await datasetInstructionsStream_service({
+          userId,
+          datasetId,
+          datasetFormat,
+          onChunk(chunk, _progress, done) {
+            controller.enqueue(chunk);
+            done && controller.close();
+          },
+        });
+      } catch {
+        controller.close();
+      }
     },
   });
 

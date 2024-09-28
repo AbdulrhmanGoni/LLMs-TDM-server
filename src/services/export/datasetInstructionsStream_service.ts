@@ -51,9 +51,7 @@ export default async function datasetInstructionsStream_service({
       },
       { batchSize: instructionsPerchunks }
     );
-
-    return true;
   } else {
-    return failure;
+    throw failure.message;
   }
 }
