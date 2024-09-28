@@ -1,9 +1,9 @@
-import export_controller from "./exportDataset_controller";
+import exportDataset_controller from "./exportDataset_controller";
 
 class ExportDatasetController {
   constructor() {}
 
-  exportDataset = export_controller;
+  exportDataset = exportDataset_controller;
 }
 
 const exportDatasetController = new ExportDatasetController();
