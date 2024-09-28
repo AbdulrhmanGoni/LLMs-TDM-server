@@ -14,6 +14,11 @@ export type RequestHandler = (
   request: Req
 ) => Promise<Response | void> | Response | void;
 
+export type WsClient = ServerWebSocket<{
+  req: Req;
+  handlers: WebSocketHandlers[];
+}>;
+
 export type WebSocketHandlers = (
-  wsClient: ServerWebSocket<{ req: Req; handlers: WebSocketHandlers[] }>
+  wsClient: WsClient
 ) => Promise<void | string> | (void | string);
