@@ -8,7 +8,7 @@ export default async function executeRouteHandlers(
   for (let i = 0; i < globalMiddlewares.length; i++) {
     const handler = globalMiddlewares[i];
     const response = await handler(request);
-    if (response !== undefined) {
+    if (response) {
       return response;
     }
   }
@@ -16,7 +16,7 @@ export default async function executeRouteHandlers(
   for (let i = 0; i < handlers.length; i++) {
     const handler = handlers[i];
     const response = await handler(request);
-    if (response !== undefined) {
+    if (response) {
       return response;
     }
   }
