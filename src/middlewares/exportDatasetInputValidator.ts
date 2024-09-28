@@ -7,6 +7,7 @@ import RequiredObjectIdRule from "../validation/RequiredObjectIdRule";
 import { DatasetsFormats } from "../services/export/datasetsFormatsRegistry";
 import stringValidator from "../validation/stringValidator";
 import type { DatasetsFormatsTypes } from "../types/datasets";
+import type { ServerWebSocket } from "bun";
 
 const exportDatasetInputSchema = validationSchema<{
   datasetId: Dataset["id"];
@@ -25,5 +26,19 @@ export default function exportDatasetInputValidator(request: Req) {
   } catch (e: any) {
     const validationErrors = e.errors as ValidationError["errors"];
     return ErrorResponse({ validationErrors }, 403);
+  }
+}
+
+export async function exportDatasetInputValidatorWS(
+  wsClient: ServerWebSocket<{ req: Req }>
+) {
+  try {
+    exportDatasetInputSchema.validate({
+      datasetId: wsClient.data.req.params.datasetId,
+      format: wsClient.data.req.search.format,
+    });
+  } catch (e: any) {
+    const validationErrors = e.errors as ValidationError["errors"];
+    return JSON.stringify(validationErrors);
   }
 }
