@@ -16,11 +16,13 @@ or for using them in Retrieval Augmented Generation (RAG) systems.
 - Bun ( The all in one JavaScript + TypeScript runtime ) :fire:
 - Typescript
 - Docker
-- MongoDB
+- MongoDB (With Replication & Sharding for availability and scalability)
+- [Clerk](https://clerk.com/) (For authentication and managing users)
 
 <div style="display: flex; gap: 25px">
   <img src="readme_file_icons/typescript.svg">
   <img src="readme_file_icons/bun.svg">
   <img src="readme_file_icons/docker.svg">
   <img src="readme_file_icons/mongodb.svg">
+  <img src="readme_file_icons/clerk.svg">
 </div>
