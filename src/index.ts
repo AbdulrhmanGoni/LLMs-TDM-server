@@ -7,6 +7,10 @@ try {
     fetch: serve,
     port: import.meta.env.PORT,
     websocket: websocketRequestsHandlers,
+    // @ts-ignore
+    static: {
+      "/api/health-check": new Response(`"Everything is good!"`),
+    },
   });
   console.log("server running on:", server.url.href, "🚀");
 } catch (error: any) {
