@@ -44,7 +44,7 @@ export default async function datasetInstructionsStream_service({
             }
 
             return chunk;
-          }, datasetFormat.decorators?.first || ""),
+          }, (!i ? datasetFormat.decorators?.first : "") || ""),
           progress,
           done
         );
