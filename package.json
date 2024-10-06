@@ -1,6 +1,6 @@
 {
-  "name": "llms-training-datasets-manager",
-  "module": "index.ts",
+  "name": "llms-tdm",
+  "module": "src/index.ts",
   "devDependencies": {
     "@types/bun": "latest"
   },
