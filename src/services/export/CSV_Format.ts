@@ -1,15 +1,21 @@
 import type { DatasetFormat } from "../../types/datasets";
 import type { InstructionBase } from "../../types/instructions";
 
+function sanitizer(text?: string | null) {
+  return text?.replaceAll(/("|\n)/g, (s) =>
+    s === '"' ? "'" : s === "\n" ? " " : s
+  );
+}
+
 function CSV_Formater({
   systemMessage,
   question,
   answer,
 }: InstructionBase): string {
   return (
-    `"\n${systemMessage ? systemMessage + "\n\n" : ""}` +
-    `### Prompt: ${question}\n\n` +
-    `### Response: ${answer}\n"\n`
+    `"${systemMessage ? sanitizer(systemMessage) + ". " : ""}` +
+    `### Prompt: ${sanitizer(question)}. ` +
+    `### Response: ${sanitizer(answer)}." \n`
   );
 }
 
