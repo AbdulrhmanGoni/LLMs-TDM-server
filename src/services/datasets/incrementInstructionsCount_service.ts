@@ -3,6 +3,7 @@ import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import DatasetModel from "../../models/DatasetsModel";
 import type { Dataset } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function incrementInstructionsCount_service(
   userId: string,
@@ -26,15 +27,15 @@ export default async function incrementInstructionsCount_service(
   if (result.modifiedCount) {
     return ServiceOperationResult.success(
       true,
-      "Instructions count incremented successfully"
+      operationsResultsMessages.successfulInstructionsCountIncrement
     );
   } else if (!result.matchedCount) {
     return ServiceOperationResult.failure(
-      `There is no dataset with "${datasetId}" id`
+      operationsResultsMessages.noDataset(datasetId)
     );
   } else {
     return ServiceOperationResult.failure(
-      "Faild to increment instructions count"
+      operationsResultsMessages.failedInstructionsCountIncrement
     );
   }
 }

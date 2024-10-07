@@ -8,9 +8,11 @@ const operationsResultsMessages = {
   noDataset: (datasetId: string) =>
     `There is no dataset with "${datasetId}" id`,
   successfulDatasetDeletion: "The dataset was deleted successfully",
-  failedDatasetDeletion: "",
   noInstructionsForDataset: (datasetId: string) =>
     `No instructions found for a dataset with this id: ${datasetId}`,
+  successfulInstructionsCountIncrement:
+    "Instructions count incremented successfully",
+  failedInstructionsCountIncrement: "Faild to increment instructions count",
 
   successfulInstructionAddition:
     "The instruction was added to the dataset successfully",
