@@ -8,14 +8,8 @@ export default async function getDatasets_service(
 ): Promise<ServiceOperationResultType> {
   const result = await DatasetsModel.findOne({ _id: userId });
 
-  if (result) {
-    return ServiceOperationResult.success(
-      result.datasets,
-      result.datasets.length ? undefined : operationsResultsMessages.noDatasets
-    );
-  } else {
-    return ServiceOperationResult.failure(
-      operationsResultsMessages.noUser(userId)
-    );
-  }
+  return ServiceOperationResult.success(
+    result?.datasets || [],
+    result?.datasets.length ? undefined : operationsResultsMessages.noDatasets
+  );
 }
