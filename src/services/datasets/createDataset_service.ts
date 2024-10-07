@@ -4,6 +4,7 @@ import type { DatasetInput } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import activitiesService from "../activities";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function createDataset_service(
   userId: string,
@@ -36,12 +37,12 @@ export default async function createDataset_service(
 
     return ServiceOperationResult.success(
       newDataset,
-      `"${newDataset.name}" dataset created successfuly`
+      operationsResultsMessages.successfulDatasetCreation(newDataset.name)
     );
   }
 
   await session.abortTransaction();
   return ServiceOperationResult.failure(
-    `"${newDataset.name}" dataset creation failed`
+    operationsResultsMessages.failedDatasetCreation(newDataset.name)
   );
 }
