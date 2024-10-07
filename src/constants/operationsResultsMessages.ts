@@ -31,6 +31,8 @@ const operationsResultsMessages = {
     "The targeted instruction not found to delete it from the dataset",
   successfulInstructionUpdate: "The instruction updated successfully",
   failedInstructionUpdate: "Failed to update the instruction",
+  noInstructionsFoundByIds: "No instructions found by the provided ids",
+  noInstructionsIdsProvided: "No instructions ids provided",
 
   noUser: (userId: string) => `There is no user with "${userId}" id`,
 };
