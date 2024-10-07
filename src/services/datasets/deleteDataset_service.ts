@@ -1,3 +1,4 @@
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 import DatasetsModel from "../../models/DatasetsModel";
 import type { Dataset } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
@@ -43,7 +44,7 @@ export default async function deleteDataset_service(
         await session.commitTransaction();
         return ServiceOperationResult.success(
           true,
-          `The dataset was deleted successfully`
+          operationsResultsMessages.successfulDatasetDeletion
         );
       } else {
         session.abortTransaction();
@@ -52,13 +53,13 @@ export default async function deleteDataset_service(
     } else {
       session.abortTransaction();
       return ServiceOperationResult.failure(
-        `There is no dataset with "${datasetId}" id`
+        operationsResultsMessages.noDataset(datasetId)
       );
     }
   } else {
     session.abortTransaction();
     return ServiceOperationResult.failure(
-      `There is no user with "${userId}" id`
+      operationsResultsMessages.noUser(userId)
     );
   }
 }
