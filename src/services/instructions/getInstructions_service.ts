@@ -8,6 +8,7 @@ import type {
   PaginationResponse,
   ServiceOperationResultType,
 } from "../../types/response";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function getInstructions_service(
   datasetId: Dataset["id"],
@@ -28,6 +29,8 @@ export default async function getInstructions_service(
       areThereMore: !!result[limit],
       instructions: result.slice(0, limit),
     },
-    !result.length && !skip ? "No instructions in this dataset" : undefined
+    !result.length && !skip
+      ? operationsResultsMessages.noInstructionsForDataset(datasetId)
+      : undefined
   );
 }
