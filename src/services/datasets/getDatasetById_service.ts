@@ -3,6 +3,7 @@ import DatasetModel from "../../models/DatasetsModel";
 import type { Dataset } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import type { Types } from "mongoose";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function getDatasetById_service(
   userId: string,
@@ -20,7 +21,7 @@ export default async function getDatasetById_service(
     return ServiceOperationResult.success(result.datasets[0]);
   } else {
     return ServiceOperationResult.failure(
-      `There is no dataset with "${datasetId}" id`
+      operationsResultsMessages.noDataset(datasetId)
     );
   }
 }
