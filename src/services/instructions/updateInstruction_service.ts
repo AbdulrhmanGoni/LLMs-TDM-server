@@ -7,6 +7,7 @@ import type {
 } from "../../types/instructions";
 import activitiesService from "../activities";
 import type { ServiceOperationResultType } from "../../types/response";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function updateInstruction_service(
   userId: string,
@@ -36,9 +37,11 @@ export default async function updateInstruction_service(
 
     return ServiceOperationResult.success(
       updatedInstruction,
-      "The instruction updated successfully"
+      operationsResultsMessages.successfulInstructionUpdate
     );
   }
 
-  return ServiceOperationResult.failure("Failed to update the instruction");
+  return ServiceOperationResult.failure(
+    operationsResultsMessages.failedInstructionUpdate
+  );
 }

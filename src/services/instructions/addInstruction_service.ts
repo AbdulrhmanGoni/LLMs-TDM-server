@@ -5,6 +5,7 @@ import type { AddInstructionInput } from "../../types/instructions";
 import type { ServiceOperationResultType } from "../../types/response";
 import datasetsService from "../datasets";
 import activitiesService from "../activities";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function addInstruction_service(
   userId: string,
@@ -44,13 +45,13 @@ export default async function addInstruction_service(
       await session.commitTransaction();
       return ServiceOperationResult.success(
         newInstruction,
-        `The instruction added to the dataset successfully`
+        operationsResultsMessages.successfulInstructionAddition
       );
     }
   }
 
   await session.abortTransaction();
   return ServiceOperationResult.failure(
-    `Adding the instruction to the dataset failed`
+    operationsResultsMessages.failedInstructionAddition
   );
 }

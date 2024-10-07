@@ -1,3 +1,4 @@
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 import DatasetModel from "../../models/DatasetsModel";
 import type { Dataset, UpdateDatasetInput } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
@@ -42,16 +43,16 @@ export default async function updateDataset_service(
       );
       return ServiceOperationResult.success(
         result.datasets.find((dataset) => dataset.id === datasetId),
-        `The dataset updated successfully`
+        operationsResultsMessages.successfulDatasetUpdate
       );
     } else {
       return ServiceOperationResult.failure(
-        `There is no dataset with "${datasetId}" id`
+        operationsResultsMessages.noDataset(datasetId)
       );
     }
   } else {
     return ServiceOperationResult.failure(
-      `There is no user with "${userId}" id`
+      operationsResultsMessages.noUser(userId)
     );
   }
 }

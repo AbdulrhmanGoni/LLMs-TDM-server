@@ -3,6 +3,7 @@ import InstructionModel from "../../models/InstructionModel";
 import type { Dataset } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import type { ClientSession } from "mongoose";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function deleteAllDatasetInstructions_service(
   datasetId: Dataset["id"],
@@ -16,18 +17,18 @@ export default async function deleteAllDatasetInstructions_service(
   if (deletedCount) {
     return ServiceOperationResult.success(
       true,
-      `The instructions of the dataset was deleted successfully`
+      operationsResultsMessages.successfulAllInstructionsDeletion
     );
   }
 
   if (acknowledged) {
     return ServiceOperationResult.success(
       true,
-      `There is no instructions to delete from this dataset`
+      operationsResultsMessages.noInstructionsToDelete
     );
   } else {
     return ServiceOperationResult.failure(
-      `Deleting the instructions of this dataset failed`
+      operationsResultsMessages.failedDeletingAllInstructions
     );
   }
 }

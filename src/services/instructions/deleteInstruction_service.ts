@@ -6,6 +6,7 @@ import type { Instruction } from "../../types/instructions";
 import type { ServiceOperationResultType } from "../../types/response";
 import activitiesService from "../activities";
 import datasetsService from "../datasets";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function deleteInstruction_service(
   userId: string,
@@ -43,18 +44,18 @@ export default async function deleteInstruction_service(
       await session.commitTransaction();
       return ServiceOperationResult.success(
         true,
-        `The instruction deleted from the dataset successfully`
+        operationsResultsMessages.successfulInstructionDeletion
       );
     } else {
       await session.abortTransaction();
       return ServiceOperationResult.failure(
-        `Deleting the instruction from the dataset failed`
+        operationsResultsMessages.failedInstructionDeletion
       );
     }
   } else {
     await session.abortTransaction();
     return ServiceOperationResult.failure(
-      `The targeted instruction not found to delete it from the dataset`
+      operationsResultsMessages.noInstructionToDelete
     );
   }
 }
