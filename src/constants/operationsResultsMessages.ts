@@ -13,6 +13,12 @@ const operationsResultsMessages = {
   successfulInstructionsCountIncrement:
     "Instructions count incremented successfully",
   failedInstructionsCountIncrement: "Faild to increment instructions count",
+  successfulAllInstructionsDeletion:
+    "The instructions of the dataset was deleted successfully",
+  failedDeletingAllInstructions:
+    "Deleting the instructions of this dataset failed",
+  noInstructionsToDelete:
+    "There are no instructions to delete from this dataset",
 
   successfulInstructionAddition:
     "The instruction was added to the dataset successfully",
