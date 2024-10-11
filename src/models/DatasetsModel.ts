@@ -1,23 +1,5 @@
-import { Schema, Types, model } from "mongoose";
-import type { DatasetInput } from "../types/datasets";
-
-export class DatasetDocument implements DatasetInput {
-  _id: Types.ObjectId;
-  name: string;
-  description: string;
-  instructionsCount: number;
-  createdAt: Date;
-  updatedAt: Date;
-
-  constructor(data: DatasetInput) {
-    this._id = new Types.ObjectId();
-    this.name = data.name;
-    this.description = data.description;
-    this.instructionsCount = 0;
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-  }
-}
+import { Schema, model } from "mongoose";
+import type { DatasetDocument } from "../types/datasets";
 
 const DatasetSchema = new Schema<DatasetDocument>(
   {

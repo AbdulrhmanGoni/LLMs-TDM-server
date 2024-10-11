@@ -1,6 +1,6 @@
 import createTransactionSession from "../../utilities/createTransactionSession";
-import DatasetsModel, { DatasetDocument } from "../../models/DatasetsModel";
-import type { DatasetInput } from "../../types/datasets";
+import DatasetsModel from "../../models/DatasetsModel";
+import { DatasetDocument, type DatasetInput } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import activitiesService from "../activities";
