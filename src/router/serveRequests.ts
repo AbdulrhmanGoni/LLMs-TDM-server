@@ -29,6 +29,7 @@ export default async function serveRequests(
       search: extractSearchParams(new URL(request.url)),
       json: await extractRequestBody(request),
       params: matchedRoute.params,
+      userId: "",
     });
 
     if (requestMethodType === "WS") {
