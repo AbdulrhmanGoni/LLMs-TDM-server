@@ -35,6 +35,8 @@ const operationsResultsMessages = {
   noInstructionsIdsProvided: "No instructions ids provided",
 
   noUser: (userId: string) => `There is no user with "${userId}" id`,
+
+  failedActivityRegistration: "Activity registration failed",
 };
 
 export default operationsResultsMessages;
