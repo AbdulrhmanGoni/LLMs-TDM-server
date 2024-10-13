@@ -4,6 +4,7 @@ import type {
 } from "../../types/activities";
 import registerActivity_service from "./registerActivity_service";
 import datasetsService from "../datasets";
+import loggerService from "../logger";
 
 export default async function registerInstructionActivity_service(
   userId: string,
@@ -31,6 +32,14 @@ export default async function registerInstructionActivity_service(
       );
     }
   } catch {
-    // logging system
+    loggerService.error(
+      `Failed to register '${activity}' instruction activity`,
+      {
+        service: "registerInstructionActivity_service",
+        userId,
+        datasetId: datasetId,
+        instructionId: instruction._id.toString(),
+      }
+    );
   }
 }
