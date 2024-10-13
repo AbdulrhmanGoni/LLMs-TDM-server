@@ -2,6 +2,7 @@ import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import RecentActivitiesModel from "../../models/RecentActivitiesModel";
 import type { Activity, ActivityResource } from "../../types/activities";
 import type { ServiceOperationResultType } from "../../types/response";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function registerActivity_service(
   resourceName: ActivityResource,
@@ -28,5 +29,8 @@ export default async function registerActivity_service(
     return ServiceOperationResult.success(true);
   }
 
-  return ServiceOperationResult.failure("Activity registration failed", false);
+  return ServiceOperationResult.failure(
+    operationsResultsMessages.failedActivityRegistration,
+    false
+  );
 }
