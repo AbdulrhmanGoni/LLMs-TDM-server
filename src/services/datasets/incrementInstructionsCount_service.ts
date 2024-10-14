@@ -1,4 +1,4 @@
-import type { ClientSession } from "mongoose";
+import { type ClientSession } from "mongoose";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import DatasetModel from "../../models/DatasetsModel";
 import type { Dataset } from "../../types/datasets";
@@ -12,16 +12,13 @@ export default async function incrementInstructionsCount_service(
   session?: ClientSession
 ): Promise<ServiceOperationResultType> {
   const result = await DatasetModel.updateOne(
-    { _id: userId },
+    { _id: userId, "datasets._id": datasetId },
     {
       $inc: {
-        "datasets.$[dataset].instructionsCount": incrementValue,
+        "datasets.$.instructionsCount": incrementValue,
       },
     },
-    {
-      session,
-      arrayFilters: [{ "dataset._id": datasetId }],
-    }
+    { session }
   );
 
   if (result.modifiedCount) {
