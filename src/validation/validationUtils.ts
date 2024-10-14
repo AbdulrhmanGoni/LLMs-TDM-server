@@ -65,6 +65,19 @@ function itContains(
     `"${value}" is not in [${values.join(", ")}] array"`;
 }
 
+function isBoolean(
+  message?: string
+): ValidationRule<string | number | boolean> {
+  return (value) => {
+    const booleans = [true, false, "true", "false", 1, 0];
+    if (booleans.some((bool) => value === bool)) {
+      return true;
+    }
+
+    return message || `"${value}" is not a valid boolean`;
+  };
+}
+
 export {
   isRequired,
   isString,
@@ -76,4 +89,5 @@ export {
   max,
   isObjectId,
   itContains,
+  isBoolean,
 };
