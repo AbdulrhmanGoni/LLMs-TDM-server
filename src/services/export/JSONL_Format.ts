@@ -7,9 +7,9 @@ function JSONL_Formater({
   answer,
 }: InstructionBase): string {
   return (
-    `{\n${systemMessage ? `"System": "${systemMessage}",\n` : ""}` +
-    `"Prompt": "${question}",\n` +
-    `"Response": "${answer}"\n}\n`
+    `{${systemMessage ? `"System": "${systemMessage}",` : ""}` +
+    `"Prompt": "${question}",` +
+    `"Response": "${answer}"}\n`
   );
 }
 
