@@ -2,11 +2,12 @@ import {
   ValidationError,
   type ValidationErrorDetails,
 } from "../types/validation";
+import type { BooleanValidator } from "./booleanValidator";
 import type { NumberValidator } from "./numberValidator";
 import type { StringValidator } from "./stringValidator";
 
 export default function validateObject<ValidInputType>(
-  schema: Record<string, StringValidator | NumberValidator>,
+  schema: Record<string, StringValidator | NumberValidator | BooleanValidator>,
   object: Record<string, any>
 ) {
   const errors: ValidationErrorDetails[] = [];
