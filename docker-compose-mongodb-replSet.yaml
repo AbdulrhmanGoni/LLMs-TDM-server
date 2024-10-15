@@ -1,17 +1,18 @@
 services:
-  primary-db: 
+  primary-db:
     image: mongo
     container_name: primary-db-container
     volumes:
-      - ./scripts/initializingReplSetScript.js:/scripts/initializingReplSetScript.js
+      - ./mongodb/scripts/initializingReplSetScript.js:/scripts/initializingReplSetScript.js
+      - ./mongodb/configs/devReplConfig.js:/configs/devReplConfig.js
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "llms-tdm-set" ]
 
-  secondary-db-1: 
+  secondary-db-1:
     image: mongo
     container_name: secondary-db-container-1
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "llms-tdm-set" ]
 
-  secondary-db-2: 
+  secondary-db-2:
     image: mongo
     container_name: secondary-db-container-2
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "llms-tdm-set" ]
