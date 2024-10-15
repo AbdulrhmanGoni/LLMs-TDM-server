@@ -1,8 +1,8 @@
 services:
-  development-server: 
+  development-server:
     build: .
     container_name: development-server-container
-    command: bun start
+    command: bun start:dev
     ports:
       - 9000:9000
     volumes:
@@ -15,5 +15,5 @@ services:
       - development-network
 
 networks:
-  development-network: 
+  development-network:
     driver: bridge
