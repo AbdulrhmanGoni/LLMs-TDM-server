@@ -1,5 +1,4 @@
 node_modules/
-.env**
 .env.**
 coverage
 data/
@@ -7,3 +6,8 @@ README.md
 tsconfig.json
 docker-compose**
 .gitignore
+Dockerfile
+readme_file_icons/
+mongodb/
+scripts/
+logs/
