@@ -1,5 +1,6 @@
 import type { DatasetFormat } from "../../types/datasets";
 import type { InstructionBase } from "../../types/instructions";
+import sanitizer from "../../utilities/instructionTextSanitizer";
 
 function JSONL_Formater({
   systemMessage,
@@ -7,9 +8,9 @@ function JSONL_Formater({
   answer,
 }: InstructionBase): string {
   return (
-    `{${systemMessage ? `"System": "${systemMessage}",` : ""}` +
-    `"Prompt": "${question}",` +
-    `"Response": "${answer}"}\n`
+    `{${systemMessage ? `"System": "${sanitizer(systemMessage)}",` : ""}` +
+    `"Prompt": "${sanitizer(question)}",` +
+    `"Response": "${sanitizer(answer)}"}\n`
   );
 }
 
