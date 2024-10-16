@@ -1,11 +1,6 @@
 import type { DatasetFormat } from "../../types/datasets";
 import type { InstructionBase } from "../../types/instructions";
-
-function sanitizer(text?: string | null) {
-  return text?.replaceAll(/("|\n)/g, (s) =>
-    s === '"' ? "'" : s === "\n" ? " " : s
-  );
-}
+import sanitizer from "../../utilities/instructionTextSanitizer";
 
 function CSV_Formater({
   systemMessage,
