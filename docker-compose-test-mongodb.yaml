@@ -1,34 +1,34 @@
 services:
-  primary-mongodb: 
-    extends:
-      file: docker-compose-mongodb-replSet.yaml
-      service: primary-db
+  primary-test-mongodb:
+    image: mongo
     networks:
       - testing-network
     container_name: primary-test-db
     ports:
       - 27011:27017
+    volumes:
+      - ./mongodb/scripts/initializingReplSetScript.js:/scripts/initializingReplSetScript.js
+      - ./mongodb/configs/testingReplSetConfig.js:/configs/testingReplSetConfig.js
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "test-llms-tdm-set" ]
 
-  secondary-mongodb-1: 
-    extends:
-      file: docker-compose-mongodb-replSet.yaml
-      service: secondary-db-1
+  secondary-test-mongodb-1:
+    image: mongo
     networks:
       - testing-network
     container_name: secondary-test-db-1
     ports:
       - 27012:27017
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "test-llms-tdm-set" ]
 
-  secondary-mongodb-2: 
-    extends:
-      file: docker-compose-mongodb-replSet.yaml
-      service: secondary-db-2
+  secondary-test-mongodb-2:
+    image: mongo
     networks:
       - testing-network
     container_name: secondary-test-db-2
     ports:
       - 27013:27017
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "test-llms-tdm-set" ]
 
 networks:
-  testing-network: 
+  testing-network:
     driver: bridge
