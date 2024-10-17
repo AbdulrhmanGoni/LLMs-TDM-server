@@ -1,36 +1,38 @@
 services:
-  primary-mongodb: 
-    extends:
-      file: docker-compose-mongodb-replSet.yaml
-      service: primary-db
+  primary-dev-mongodb:
+    image: mongo
     volumes:
-      - ./mongo:/data/db
+      - development-mongodb-data:/data/db
+      - ./mongodb/scripts/initializingReplSetScript.js:/scripts/initializingReplSetScript.js
+      - ./mongodb/configs/developmentReplSetConfig.js:/configs/developmentReplSetConfig.js
     networks:
       - development-network
     container_name: primary-dev-db
     ports:
       - 27001:27017
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dev-llms-tdm-set" ]
 
-  secondary-mongodb-1: 
-    extends:
-      file: docker-compose-mongodb-replSet.yaml
-      service: secondary-db-1
+  secondary-dev-mongodb-1:
+    image: mongo
     networks:
       - development-network
     container_name: secondary-dev-db-1
     ports:
       - 27002:27017
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dev-llms-tdm-set" ]
 
-  secondary-mongodb-2: 
-    extends:
-      file: docker-compose-mongodb-replSet.yaml
-      service: secondary-db-2
+  secondary-dev-mongodb-2:
+    image: mongo
     networks:
       - development-network
     container_name: secondary-dev-db-2
     ports:
       - 27003:27017
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dev-llms-tdm-set" ]
 
 networks:
-  development-network: 
+  development-network:
     driver: bridge
+
+volumes:
+  development-mongodb-data:
