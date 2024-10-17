@@ -20,6 +20,11 @@ export default async function datasetInstructionsStream_service({
     datasetId
   );
   if (cursor) {
+    if (!dataset?.instructionsCount) {
+      onChunk("", 100, true);
+      return;
+    }
+
     const instructionsPerchunks = 10;
     const totalChunks = Math.ceil(
       dataset.instructionsCount / instructionsPerchunks
