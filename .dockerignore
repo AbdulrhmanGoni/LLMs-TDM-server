@@ -10,4 +10,5 @@ Dockerfile
 readme_file_icons/
 mongodb/
 scripts/
+tests/
 logs/
