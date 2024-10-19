@@ -1,10 +1,9 @@
-import { afterAll, describe, expect, it } from "bun:test";
+import { afterAll, describe, expect, it, afterEach } from "bun:test";
 import { request } from "../..";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
 import DatasetsModel from "../../../src/models/DatasetsModel";
 import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
-import { afterEach } from "bun:test";
 
 const path = "datasets";
 
