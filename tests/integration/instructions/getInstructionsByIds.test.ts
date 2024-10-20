@@ -1,10 +1,15 @@
-import { describe, expect, it, afterAll } from "bun:test";
+import { describe, expect, it, afterAll, beforeAll } from "bun:test";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 import InstructionModel from "../../../src/models/InstructionModel";
 import { getFakeInstructions } from "../../fake-data/fakeInstructions";
 import getInstructionsByIds_service from "../../../src/services/instructions/getInstructionsByIds_service";
 import { Types } from "mongoose";
+import databaseConnection from "../../../src/configurations/databaseConnection";
+
+beforeAll(async () => {
+  await databaseConnection();
+});
 
 describe("Test `getInstructionsByIds` service function", () => {
   it('Should return an error says that "the instructions ids are not provided"', async () => {
