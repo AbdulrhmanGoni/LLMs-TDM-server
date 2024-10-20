@@ -1,8 +1,13 @@
-import { describe, expect, it, afterAll } from "bun:test";
+import { describe, expect, it, afterAll, beforeAll } from "bun:test";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
 import DatasetsModel from "../../../src/models/DatasetsModel";
 import incrementInstructionsCount_service from "../../../src/services/datasets/incrementInstructionsCount_service";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
+import databaseConnection from "../../../src/configurations/databaseConnection";
+
+beforeAll(async () => {
+  await databaseConnection();
+});
 
 describe("Test `incrementInstructionsCount_service` service function", () => {
   it("Should fail to increment the instructions count of the dataset because the dataset is not exist", async () => {
