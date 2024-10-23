@@ -40,8 +40,9 @@ const operationsResultsMessages = {
 
   successfulHuggingfaceAccountCreation:
     "Your huggingface account was created successfully",
-
   failedHuggingfaceAccountCreation: "Failed to create Your huggingface account",
+  failedHuggingfaceOAuthProcess:
+    "Huggingface OAuth callback failed to complate",
 };
 
 export default operationsResultsMessages;
