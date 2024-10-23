@@ -1,5 +1,6 @@
 import { Types } from "mongoose";
 import type { InstructionBase } from "./instructions";
+import type { DatasetRepository } from "./huggingface";
 
 export type DatasetBase = {
   name: string;
@@ -38,6 +39,7 @@ export class DatasetDocument implements DatasetInput {
   instructionsCount: number;
   createdAt: Date;
   updatedAt: Date;
+  repository?: DatasetRepository;
 
   constructor(data: DatasetInput) {
     this._id = new Types.ObjectId();

@@ -15,6 +15,30 @@ const DatasetSchema = new Schema<DatasetDocument>(
       type: Number,
       default: 0,
     },
+    repository: {
+      type: {
+        name: {
+          type: String,
+          required: true,
+        },
+        filePath: {
+          type: String,
+          required: true,
+        },
+        fileFormat: {
+          type: String,
+          required: true,
+        },
+        syncedAt: {
+          type: Date,
+          required: true,
+        },
+        isUpToDate: {
+          type: Boolean,
+          required: true,
+        },
+      },
+    },
   },
   {
     timestamps: true,
