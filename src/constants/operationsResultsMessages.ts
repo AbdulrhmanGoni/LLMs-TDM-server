@@ -37,6 +37,11 @@ const operationsResultsMessages = {
   noUser: (userId: string) => `There is no user with "${userId}" id`,
 
   failedActivityRegistration: "Activity registration failed",
+
+  successfulHuggingfaceAccountCreation:
+    "Your huggingface account was created successfully",
+
+  failedHuggingfaceAccountCreation: "Failed to create Your huggingface account",
 };
 
 export default operationsResultsMessages;
