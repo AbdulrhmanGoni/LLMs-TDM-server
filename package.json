@@ -11,11 +11,14 @@
     "start": "bun src/index.ts",
     "start:dev": "bun --watch src/index.ts",
     "dev": "bun scripts/startDevelopmentServer.ts",
-    "docker:dev": "docker compose -f docker-compose-dev-server.yaml up -d"
+    "docker:dev": "docker compose -f docker-compose-dev-server.yaml up -d",
+    "prod": "bun --env-file=.env.production scripts/startProductionServer.ts",
+    "docker:prod": "docker compose -f docker-compose-prod-server.yaml up -d --scale production-server=3"
   },
   "type": "module",
   "dependencies": {
     "@clerk/backend": "^1.13.2",
+    "@huggingface/hub": "^0.18.2",
     "jose": "^5.8.0",
     "mongoose": "^8.5.3"
   },
