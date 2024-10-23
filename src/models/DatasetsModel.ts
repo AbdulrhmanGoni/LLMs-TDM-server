@@ -32,6 +32,27 @@ const DatasetsSchema = new Schema(
       type: [DatasetSchema],
       default: [],
     },
+    huggingfaceAccount: {
+      type: {
+        accessToken: {
+          type: String,
+          required: true,
+        },
+        refreshToken: {
+          type: String,
+          required: true,
+        },
+        username: {
+          type: String,
+          required: true,
+        },
+        emailVerified: {
+          type: Boolean,
+          required: true,
+        },
+        _id: false,
+      },
+    },
   },
   {
     timestamps: false,
