@@ -44,6 +44,9 @@ const operationsResultsMessages = {
   failedHuggingfaceOAuthProcess:
     "Huggingface OAuth callback failed to complate",
   noHuggingfaceAccount: "You don't have a linked huggingface account",
+  successullyDatasetUpload:
+    "The dataset has been uploaded to the repository successfully",
+  noLinkedDatasetRepository: "The dataset has no linked huggingface repository",
 };
 
 export default operationsResultsMessages;
