@@ -5,6 +5,7 @@ import getHuggingfaceAccount_service from "./getHuggingfaceAccount_service";
 import createDatasetRepository_service from "./createDatasetRepository_service";
 import getDatasetsRepositories_service from "./getDatasetsRepositories_service";
 import uploadDatasetRepository_service from "./uploadDatasetRepository_service";
+import pushDatasetToRepository_service from "./pushDatasetToRepository_service";
 
 export class HuggingfaceService {
   constructor() {}
@@ -23,6 +24,7 @@ export class HuggingfaceService {
 
   uploadDatasetRepository = uploadDatasetRepository_service;
 
+  pushDatasetToRepository = pushDatasetToRepository_service;
 }
 
 const huggingfaceService = new HuggingfaceService();
