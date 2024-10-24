@@ -43,6 +43,7 @@ const operationsResultsMessages = {
   failedHuggingfaceAccountCreation: "Failed to create Your huggingface account",
   failedHuggingfaceOAuthProcess:
     "Huggingface OAuth callback failed to complate",
+  noHuggingfaceAccount: "You don't have a linked huggingface account",
 };
 
 export default operationsResultsMessages;
