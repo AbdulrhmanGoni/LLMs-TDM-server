@@ -1,6 +1,7 @@
 import createHuggingfaceAccount_service from "./createHuggingfaceAccount_service";
 import huggingfaceOAuthCallback_service from "./huggingfaceOAuthCallback_service";
 import getHuggingfaceAccount_service from "./getHuggingfaceAccount_service";
+import createDatasetRepository_service from "./createDatasetRepository_service";
 
 export class HuggingfaceService {
   constructor() {}
@@ -11,6 +12,7 @@ export class HuggingfaceService {
 
   getHuggingfaceAccount = getHuggingfaceAccount_service;
 
+  createDatasetRepository = createDatasetRepository_service;
 }
 
 const huggingfaceService = new HuggingfaceService();

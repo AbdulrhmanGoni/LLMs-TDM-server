@@ -8,6 +8,11 @@ export type UserHuggingfaceAccount = {
   refreshToken: string;
 };
 
+export type CreateDatasetRepositoryInput = {
+  license?: string;
+  name: string;
+};
+
 export type DatasetRepositoryBase = {
   fileFormat: DatasetsFormatsTypes;
   filePath: string;
