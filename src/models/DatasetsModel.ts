@@ -62,6 +62,10 @@ const DatasetsSchema = new Schema(
           type: String,
           required: true,
         },
+        accessTokenExpiresIn: {
+          type: Date,
+          required: true,
+        },
         refreshToken: {
           type: String,
           required: true,
