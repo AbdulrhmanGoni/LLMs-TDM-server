@@ -1,7 +1,7 @@
 import type { HuggingfaceService } from ".";
 import operationsResultsMessages from "../../constants/operationsResultsMessages";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
-import { getAccessTokens } from "./huggingFaceOAuthTokenRequests";
+import { getHuggingfaceAccessTokens } from "./huggingFaceOAuthTokenRequests";
 
 export default async function huggingfaceOAuthCallback_service(
   this: HuggingfaceService,
@@ -9,7 +9,7 @@ export default async function huggingfaceOAuthCallback_service(
   code: string
 ) {
   try {
-    const gettingTokenResponse = await getAccessTokens(code);
+    const gettingTokenResponse = await getHuggingfaceAccessTokens(code);
 
     if (gettingTokenResponse.success) {
       return await this.createHuggingfaceAccount(userId, {

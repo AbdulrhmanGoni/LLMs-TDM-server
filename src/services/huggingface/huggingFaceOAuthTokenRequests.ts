@@ -26,7 +26,7 @@ export async function huggingFaceOAuthTokenEndpointRequest<T extends object>(
   };
 }
 
-export async function getAccessTokens(code: string) {
+export async function getHuggingfaceAccessTokens(code: string) {
   return await huggingFaceOAuthTokenEndpointRequest({
     code,
     grant_type: "authorization_code",
