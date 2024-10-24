@@ -47,6 +47,8 @@ const operationsResultsMessages = {
   successullyDatasetUpload:
     "The dataset has been uploaded to the repository successfully",
   noLinkedDatasetRepository: "The dataset has no linked huggingface repository",
+  successfulDatasetSyncWithRepository:
+    "The Dataset has been synced with the repository successfully",
 };
 
 export default operationsResultsMessages;
