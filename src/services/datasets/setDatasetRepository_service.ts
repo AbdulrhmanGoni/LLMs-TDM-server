@@ -1,6 +1,6 @@
 import type { ClientSession } from "mongoose";
 import DatasetsModel from "../../models/DatasetsModel";
-import type { Dataset } from "../../types/datasets";
+import type { Dataset, DatasetDocument } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import type { DatasetRepository } from "../../types/huggingface";
@@ -17,7 +17,9 @@ export default async function setDatasetRepository_service({
   datasetId,
   repository,
   options,
-}: SetDatasetRepositoryParams): Promise<ServiceOperationResultType> {
+}: SetDatasetRepositoryParams): Promise<
+  ServiceOperationResultType<DatasetDocument>
+> {
   let updateObject = {};
   if (repository === null) {
     updateObject = { $unset: { "datasets.$.repository": true } };
@@ -33,23 +35,17 @@ export default async function setDatasetRepository_service({
     };
   }
 
-  const { modifiedCount, matchedCount } = await DatasetsModel.updateOne(
+  const updatedDataset = await DatasetsModel.findByIdAndUpdate(
     { _id: userId, "datasets._id": datasetId },
     updateObject,
-    { session: options?.session }
+    { session: options?.session, new: true }
   );
 
-  if (modifiedCount) {
-    return ServiceOperationResult.success(true);
-  }
-
-  if (matchedCount) {
-    return ServiceOperationResult.failure(
-      "No dataset found to update its repository"
-    );
+  if (updatedDataset) {
+    return ServiceOperationResult.success(updatedDataset);
   }
 
   return ServiceOperationResult.failure(
-    "Failed to update the repository of the dataset"
+    "No dataset found to update its repository"
   );
 }
