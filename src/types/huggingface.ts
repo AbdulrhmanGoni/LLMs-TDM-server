@@ -24,3 +24,10 @@ export type DatasetRepository = DatasetRepositoryBase & {
   isUpToDate: boolean;
 };
 
+export type DatasetRepositoryCommit = {
+  commitTitle: string;
+  commitDescription: string;
+};
+
+export type PushDatasetToRepositoryInputSchema = DatasetRepositoryBase &
+  DatasetRepositoryCommit;
