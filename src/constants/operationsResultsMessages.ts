@@ -37,6 +37,18 @@ const operationsResultsMessages = {
   noUser: (userId: string) => `There is no user with "${userId}" id`,
 
   failedActivityRegistration: "Activity registration failed",
+
+  successfulHuggingfaceAccountCreation:
+    "Your huggingface account was created successfully",
+  failedHuggingfaceAccountCreation: "Failed to create Your huggingface account",
+  failedHuggingfaceOAuthProcess:
+    "Huggingface OAuth callback failed to complate",
+  noHuggingfaceAccount: "You don't have a linked huggingface account",
+  successullyDatasetUpload:
+    "The dataset has been uploaded to the repository successfully",
+  noLinkedDatasetRepository: "The dataset has no linked huggingface repository",
+  successfulDatasetSyncWithRepository:
+    "The Dataset has been synced with the repository successfully",
 };
 
 export default operationsResultsMessages;

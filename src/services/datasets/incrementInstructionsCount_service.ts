@@ -13,11 +13,48 @@ export default async function incrementInstructionsCount_service(
 ): Promise<ServiceOperationResultType> {
   const result = await DatasetModel.updateOne(
     { _id: userId, "datasets._id": datasetId },
-    {
-      $inc: {
-        "datasets.$.instructionsCount": incrementValue,
+    [
+      {
+        $set: {
+          datasets: {
+            $map: {
+              input: "$datasets",
+              as: "dataset",
+              in: {
+                $cond: {
+                  if: { $eq: ["$$dataset._id", { $toObjectId: datasetId }] },
+                  then: {
+                    $mergeObjects: [
+                      "$$dataset",
+                      {
+                        instructionsCount: {
+                          $add: ["$$dataset.instructionsCount", incrementValue],
+                        },
+                      },
+                      {
+                        repository: {
+                          $cond: {
+                            if: { $ifNull: ["$$dataset.repository", false] },
+                            then: {
+                              $mergeObjects: [
+                                "$$dataset.repository",
+                                { isUpToDate: false },
+                              ],
+                            },
+                            else: "$$REMOVE",
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  else: "$$dataset",
+                },
+              },
+            },
+          },
+        },
       },
-    },
+    ],
     { session }
   );
 

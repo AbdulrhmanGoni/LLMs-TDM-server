@@ -8,6 +8,8 @@ import type {
 import activitiesService from "../activities";
 import type { ServiceOperationResultType } from "../../types/response";
 import operationsResultsMessages from "../../constants/operationsResultsMessages";
+import datasetsService from "../datasets";
+import createTransactionSession from "../../utilities/createTransactionSession";
 
 export default async function updateInstruction_service(
   userId: string,
@@ -15,13 +17,27 @@ export default async function updateInstruction_service(
   instructionId: Instruction["id"],
   updateData: UpdateInstructionInput
 ): Promise<ServiceOperationResultType<Instruction>> {
+  const session = await createTransactionSession();
+
   const updatedInstruction = await InstructionModel.findOneAndUpdate(
     { _id: instructionId },
     updateData,
-    { new: true }
+    { new: true, session }
   );
 
   if (updatedInstruction) {
+    const updatingRepoOperation = await datasetsService.setDatasetRepository({
+      datasetId,
+      userId,
+      repository: { isUpToDate: false },
+      options: { session },
+    });
+
+    if (!updatingRepoOperation.isSuccess) {
+      session.abortTransaction();
+      return ServiceOperationResult.failure(updatingRepoOperation.message);
+    }
+
     activitiesService.registerInstructionActivity(
       userId,
       datasetId,
@@ -35,12 +51,14 @@ export default async function updateInstruction_service(
       "Modification"
     );
 
+    await session.commitTransaction();
     return ServiceOperationResult.success(
       updatedInstruction,
       operationsResultsMessages.successfulInstructionUpdate
     );
   }
 
+  await session.abortTransaction();
   return ServiceOperationResult.failure(
     operationsResultsMessages.failedInstructionUpdate
   );

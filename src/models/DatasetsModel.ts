@@ -15,6 +15,30 @@ const DatasetSchema = new Schema<DatasetDocument>(
       type: Number,
       default: 0,
     },
+    repository: {
+      type: {
+        name: {
+          type: String,
+          required: true,
+        },
+        filePath: {
+          type: String,
+          required: true,
+        },
+        fileFormat: {
+          type: String,
+          required: true,
+        },
+        syncedAt: {
+          type: Date,
+          required: true,
+        },
+        isUpToDate: {
+          type: Boolean,
+          required: true,
+        },
+      },
+    },
   },
   {
     timestamps: true,
@@ -31,6 +55,31 @@ const DatasetsSchema = new Schema(
     datasets: {
       type: [DatasetSchema],
       default: [],
+    },
+    huggingfaceAccount: {
+      type: {
+        accessToken: {
+          type: String,
+          required: true,
+        },
+        accessTokenExpiresIn: {
+          type: Date,
+          required: true,
+        },
+        refreshToken: {
+          type: String,
+          required: true,
+        },
+        username: {
+          type: String,
+          required: true,
+        },
+        emailVerified: {
+          type: Boolean,
+          required: true,
+        },
+        _id: false,
+      },
     },
   },
   {

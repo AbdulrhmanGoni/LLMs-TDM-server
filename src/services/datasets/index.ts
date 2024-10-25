@@ -5,6 +5,7 @@ import updateDataset_service from "./updateDataset_service";
 import getDatasetById_service from "./getDatasetById_service";
 import incrementInstructionsCount_service from "./incrementInstructionsCount_service";
 import datasetsOverview_service from "./datasetsOverview_service";
+import setDatasetRepository_service from "./setDatasetRepository_service";
 
 class DatasetsService {
   constructor() {}
@@ -22,6 +23,8 @@ class DatasetsService {
   incrementInstructionsCount = incrementInstructionsCount_service;
 
   datasetsOverview = datasetsOverview_service;
+
+  setDatasetRepository = setDatasetRepository_service;
 }
 
 const datasetsService = new DatasetsService();
