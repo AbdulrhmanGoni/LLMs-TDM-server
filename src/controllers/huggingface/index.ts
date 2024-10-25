@@ -2,6 +2,7 @@ import huggingfaceOAuthCallback_controller from "./huggingfaceOAuthCallback_cont
 import getHuggingfaceAccount_controller from "./getHuggingfaceAccount_controller";
 import createDatasetRepository_controller from "./createDatasetRepository_controller";
 import getDatasetsRepositories_controller from "./getDatasetsRepositories_controller";
+import pushDatasetToRepository_controller from "./pushDatasetToRepository_controller";
 
 class HuggingfaceController {
   constructor() {}
@@ -13,6 +14,8 @@ class HuggingfaceController {
   createDatasetRepository = createDatasetRepository_controller;
 
   getDatasetsRepositories = getDatasetsRepositories_controller;
+
+  pushDatasetToRepository = pushDatasetToRepository_controller;
 }
 
 const huggingfaceController = new HuggingfaceController();
