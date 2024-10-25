@@ -4,6 +4,7 @@ import createDatasetRepository_controller from "./createDatasetRepository_contro
 import getDatasetsRepositories_controller from "./getDatasetsRepositories_controller";
 import pushDatasetToRepository_controller from "./pushDatasetToRepository_controller";
 import syncDatasetWithRepository_controller from "./syncDatasetWithRepository_controller";
+import unlinkDatasetWithRepository_controller from "./unlinkDatasetWithRepository_controller";
 
 class HuggingfaceController {
   constructor() {}
@@ -19,6 +20,8 @@ class HuggingfaceController {
   pushDatasetToRepository = pushDatasetToRepository_controller;
 
   syncDatasetWithRepository = syncDatasetWithRepository_controller;
+
+  unlinkDatasetWithRepository = unlinkDatasetWithRepository_controller;
 }
 
 const huggingfaceController = new HuggingfaceController();
