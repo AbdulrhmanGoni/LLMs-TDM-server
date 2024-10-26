@@ -2,6 +2,7 @@ import huggingfaceController from "../controllers/huggingface";
 import createDatasetRepositoryInputValidator from "../middlewares/createDatasetRepositoryInputValidator";
 import pushDatasetToRepositoryInputValidator from "../middlewares/pushDatasetToRepositoryInputValidator";
 import syncDatasetWithRepositoryInputValidator from "../middlewares/syncDatasetWithRepositoryInputValidator";
+import unlinkDatasetWithRepositoryInputValidator from "../middlewares/unlinkDatasetWithRepositoryInputValidator";
 import type { RouterType } from "../router/Router";
 
 export default function huggingfaceRoutesRegisterer(router: RouterType): void {
@@ -40,6 +41,7 @@ export default function huggingfaceRoutesRegisterer(router: RouterType): void {
 
   router.POST(
     "/huggingface/datasets/:datasetId/unlink",
+    unlinkDatasetWithRepositoryInputValidator,
     huggingfaceController.unlinkDatasetWithRepository
   );
 }

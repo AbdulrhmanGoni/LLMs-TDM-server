@@ -12,6 +12,10 @@ export default async function unlinkDatasetWithRepository_controller(
       await huggingfaceService.unlinkDatasetWithRepository({
         userId: request.userId,
         datasetId: request.params.datasetId,
+        deleteRepository: request.json.deleteRepository,
+        deleteDatasetFile: request.json.deleteDatasetFile,
+        commitTitle: request.json.commitTitle,
+        commitDescription: request.json.commitDescription,
       });
 
     if (isSuccess) {
