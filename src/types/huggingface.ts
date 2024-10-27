@@ -31,3 +31,8 @@ export type DatasetRepositoryCommit = {
 
 export type PushDatasetToRepositoryInputSchema = DatasetRepositoryBase &
   DatasetRepositoryCommit;
+
+export type UnlinkDatasetWithRepositoryInputSchema = DatasetRepositoryCommit & {
+  deleteDatasetFile: boolean;
+  deleteRepository: boolean;
+};
