@@ -44,8 +44,10 @@ export default async function setDatasetRepository_service({
     }
   );
 
-  if (updatedDataset) {
-    return ServiceOperationResult.success(updatedDataset);
+  if (data) {
+    return ServiceOperationResult.success(
+      data.datasets.find((dataset) => dataset.id === datasetId)
+    );
   }
 
   return ServiceOperationResult.failure(
