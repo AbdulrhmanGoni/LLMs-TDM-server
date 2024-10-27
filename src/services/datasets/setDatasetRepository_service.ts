@@ -1,4 +1,4 @@
-import type { ClientSession } from "mongoose";
+import { Types, type ClientSession } from "mongoose";
 import DatasetsModel from "../../models/DatasetsModel";
 import type { Dataset, DatasetDocument } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
@@ -9,7 +9,10 @@ type SetDatasetRepositoryParams = {
   userId: string;
   datasetId: Dataset["id"];
   repository: Partial<DatasetRepository> | null;
-  options?: { session?: ClientSession };
+  options?: {
+    session?: ClientSession;
+    returnUpdatedDocument?: boolean;
+  };
 };
 
 export default async function setDatasetRepository_service({
@@ -40,6 +43,7 @@ export default async function setDatasetRepository_service({
     updateObject,
     {
       session: options?.session,
+      new: options?.returnUpdatedDocument,
       arrayFilters: [{ "dst._id": { $eq: new Types.ObjectId(datasetId) } }],
     }
   );
