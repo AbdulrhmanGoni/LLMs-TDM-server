@@ -22,12 +22,12 @@ export default async function setDatasetRepository_service({
 > {
   let updateObject = {};
   if (repository === null) {
-    updateObject = { $unset: { "datasets.$.repository": true } };
+    updateObject = { $unset: { "datasets.$[dst].repository": true } };
   } else {
     updateObject = {
       $set: Object.keys(repository).reduce((updateObject, key) => {
         Object.assign(updateObject, {
-          [`datasets.$.repository.${key}`]:
+          [`datasets.$[dst].repository.${key}`]:
             repository[key as keyof DatasetRepository],
         });
         return updateObject;
@@ -35,10 +35,13 @@ export default async function setDatasetRepository_service({
     };
   }
 
-  const updatedDataset = await DatasetsModel.findByIdAndUpdate(
-    { _id: userId, "datasets._id": datasetId },
+  const data = await DatasetsModel.findByIdAndUpdate(
+    { _id: userId },
     updateObject,
-    { session: options?.session, new: true }
+    {
+      session: options?.session,
+      arrayFilters: [{ "dst._id": { $eq: new Types.ObjectId(datasetId) } }],
+    }
   );
 
   if (updatedDataset) {
