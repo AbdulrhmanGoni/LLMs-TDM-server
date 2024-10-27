@@ -2,12 +2,11 @@ const operationsResultsMessages = {
   successfulDatasetCreation: (datasetName: string) =>
     `"${datasetName}" dataset created successfuly`,
   successfulDatasetUpdate: "The dataset was updated successfully",
-  failedDatasetCreation: (datasetName: string) =>
-    `"${datasetName}" dataset creation failed`,
   noDatasets: "There are no datasets yet",
   noDataset: (datasetId: string) =>
     `There is no dataset with "${datasetId}" id`,
   successfulDatasetDeletion: "The dataset was deleted successfully",
+  maxDatasetsReached: "You have reached the maximum number of datasets",
   noInstructionsForDataset: (datasetId: string) =>
     `No instructions found for a dataset with this id: ${datasetId}`,
   successfulInstructionsCountIncrement:
