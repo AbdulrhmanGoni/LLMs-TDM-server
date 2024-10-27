@@ -4,6 +4,7 @@ import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
 import DatasetsModel from "../../../src/models/DatasetsModel";
 import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
+import maxDatasetsForUser from "../../../src/constants/maxDatasetsForUser";
 
 const path = "datasets";
 
@@ -24,6 +25,24 @@ describe(`POST /${path}`, () => {
     expect(resBody.message).toBe(
       operationsResultsMessages.successfulDatasetCreation(fakeDataset.name)
     );
+  });
+
+  it("Should response an error becaues the user has reached the max number of datasets", async () => {
+    const testingDatasets = [];
+    for (let i = 0; i < maxDatasetsForUser; i++) {
+      testingDatasets.push(getRandomFakeDataset());
+    }
+
+    await DatasetsModel.updateOne(
+      { _id: process.env.TESTING_USER_ID },
+      { $set: { datasets: testingDatasets } }
+    );
+
+    const { name, description } = getRandomFakeDataset();
+
+    const { resBody, status } = await request.POST(path, { name, description });
+    expect(status).toBe(400);
+    expect(resBody.message).toBe(operationsResultsMessages.maxDatasetsReached);
   });
 
   it("Should response validate error 'description filed is required'", async () => {
