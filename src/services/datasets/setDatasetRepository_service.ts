@@ -1,4 +1,4 @@
-import type { ClientSession } from "mongoose";
+import { Types, type ClientSession } from "mongoose";
 import DatasetsModel from "../../models/DatasetsModel";
 import type { Dataset, DatasetDocument } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
@@ -9,7 +9,10 @@ type SetDatasetRepositoryParams = {
   userId: string;
   datasetId: Dataset["id"];
   repository: Partial<DatasetRepository> | null;
-  options?: { session?: ClientSession };
+  options?: {
+    session?: ClientSession;
+    returnUpdatedDocument?: boolean;
+  };
 };
 
 export default async function setDatasetRepository_service({
@@ -22,12 +25,12 @@ export default async function setDatasetRepository_service({
 > {
   let updateObject = {};
   if (repository === null) {
-    updateObject = { $unset: { "datasets.$.repository": true } };
+    updateObject = { $unset: { "datasets.$[dst].repository": true } };
   } else {
     updateObject = {
       $set: Object.keys(repository).reduce((updateObject, key) => {
         Object.assign(updateObject, {
-          [`datasets.$.repository.${key}`]:
+          [`datasets.$[dst].repository.${key}`]:
             repository[key as keyof DatasetRepository],
         });
         return updateObject;
@@ -35,14 +38,20 @@ export default async function setDatasetRepository_service({
     };
   }
 
-  const updatedDataset = await DatasetsModel.findByIdAndUpdate(
-    { _id: userId, "datasets._id": datasetId },
+  const data = await DatasetsModel.findByIdAndUpdate(
+    { _id: userId },
     updateObject,
-    { session: options?.session, new: true }
+    {
+      session: options?.session,
+      new: options?.returnUpdatedDocument,
+      arrayFilters: [{ "dst._id": { $eq: new Types.ObjectId(datasetId) } }],
+    }
   );
 
-  if (updatedDataset) {
-    return ServiceOperationResult.success(updatedDataset);
+  if (data) {
+    return ServiceOperationResult.success(
+      data.datasets.find((dataset) => dataset.id === datasetId)
+    );
   }
 
   return ServiceOperationResult.failure(
