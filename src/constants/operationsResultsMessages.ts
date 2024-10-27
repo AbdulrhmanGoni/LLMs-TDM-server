@@ -8,6 +8,7 @@ const operationsResultsMessages = {
   noDataset: (datasetId: string) =>
     `There is no dataset with "${datasetId}" id`,
   successfulDatasetDeletion: "The dataset was deleted successfully",
+  maxDatasetsReached: "You have reached the maximum number of datasets",
   noInstructionsForDataset: (datasetId: string) =>
     `No instructions found for a dataset with this id: ${datasetId}`,
   successfulInstructionsCountIncrement:
