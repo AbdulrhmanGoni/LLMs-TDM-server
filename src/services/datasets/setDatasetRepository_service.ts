@@ -4,6 +4,7 @@ import type { Dataset, DatasetDocument } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import type { DatasetRepository } from "../../types/huggingface";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 type SetDatasetRepositoryParams = {
   userId: string;
@@ -48,13 +49,13 @@ export default async function setDatasetRepository_service({
     }
   );
 
-  if (data) {
-    return ServiceOperationResult.success(
-      data.datasets.find((dataset) => dataset.id === datasetId)
-    );
+  const dataset = data?.datasets.find((dataset) => dataset.id === datasetId);
+
+  if (dataset) {
+    return ServiceOperationResult.success(dataset);
   }
 
   return ServiceOperationResult.failure(
-    "No dataset found to update its repository"
+    operationsResultsMessages.noDataset(datasetId)
   );
 }
