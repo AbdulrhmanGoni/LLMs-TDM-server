@@ -4,10 +4,8 @@ WORKDIR /llms-tdm
 
 COPY package.json ./
 
-COPY bun.lockb ./
+RUN bun install
 
 COPY . .
-
-RUN bun install
 
 CMD [ "bun", "start" ]
