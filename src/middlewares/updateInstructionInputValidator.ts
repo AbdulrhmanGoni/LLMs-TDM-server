@@ -9,6 +9,9 @@ import type {
   UpdateInstructionInput,
 } from "../types/instructions";
 import InstructionSchemaRules from "../validation/InstructionSchemaRules";
+import haveSharedKey from "../utilities/haveSharedKey";
+
+const InstructionBaseRules = InstructionSchemaRules();
 
 const updateInstructionInputSchema = validationSchema<
   {
@@ -18,11 +21,18 @@ const updateInstructionInputSchema = validationSchema<
 >({
   datasetId: RequiredObjectIdRule(),
   instructionId: RequiredObjectIdRule(),
-  ...InstructionSchemaRules(),
+  ...InstructionBaseRules,
 });
+
+export const emptyUpdateInstructionBodyMessage =
+  "You have to choose at least one field of the instruction to update it";
 
 export default function updateInstructionInputValidator(request: Req) {
   try {
+    if (haveSharedKey(InstructionBaseRules, request.json)) {
+      return ErrorResponse(emptyUpdateInstructionBodyMessage, 400);
+    }
+
     const { datasetId, instructionId, ...updateData } =
       updateInstructionInputSchema.validate({
         datasetId: request.search.datasetId,
