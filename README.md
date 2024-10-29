@@ -81,3 +81,37 @@ cp .env.example .env.production
 The server should now be available at `http://localhost:9000` (or the port you specified).
 
 
+# Tests :test_tube:
+
+I use [Bun](https://bun.sh/)'s built-in and Jest-compatible [test runner](https://bun.sh/docs/cli/test) for writing and running tests.
+
+> Note: 
+> Don't forget to set the environment variables of .env.test` file before running the tests
+
+You can copy the following template for quick start :point_down:
+
+```
+NODE_ENV=test
+PORT=9100
+DB_NAME=test
+DB_HOST=127.0.0.1 # Default host of testing database
+DB_PORT=270111 # Default port of testing database
+DB_URL="mongodb://$DB_HOST:$DB_PORT/$DB_NAME?directConnection=true"
+TESTING_USER_ID="user_Xm3A5q9gd3ghR73oh975bA" # Random user id for test
+MUTE_LOGS=true
+```
+
+To run all tests use the following command:
+```
+bun test
+```
+
+To run a specific type of tests (unit, integration or e2e) use the following command:
+```
+bun test tests/<unit|integration|e2e>
+```
+
+To run a specific tests file just use the name of the file:
+```
+bun test <test-file-name>
+```
