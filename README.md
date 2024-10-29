@@ -19,7 +19,7 @@ or for using them in Retrieval Augmented Generation (RAG) systems.
   * :trackball: Syncing local datasets with their linked repositories after updates.
   * :electric_plug: Unlinking a local dataset with its linked repository ***(with options to delete the entire repository or just the dataset file)***
 
-# Tech Stack
+# Tech Stack :hammer_and_wrench:
 
 - Bun ( The all in one JavaScript + TypeScript runtime ) :fire:
 - Typescript
@@ -27,10 +27,57 @@ or for using them in Retrieval Augmented Generation (RAG) systems.
 - MongoDB (With Replication & Sharding for availability and scalability)
 - [Clerk](https://clerk.com/) (For authentication and managing users)
 
-<div style="display: flex; gap: 25px">
-  <img src="readme_file_icons/typescript.svg">
-  <img src="readme_file_icons/bun.svg">
-  <img src="readme_file_icons/docker.svg">
-  <img src="readme_file_icons/mongodb.svg">
-  <img src="readme_file_icons/clerk.svg">
-</div>
+![Typescript](readme_file_icons/typescript.svg)
+![Bun](readme_file_icons/bun.svg)
+![Docker](readme_file_icons/docker.svg)
+![MongoDB](readme_file_icons/mongodb.svg)
+![Clerk](readme_file_icons/clerk.svg)
+
+# Installation :arrow_down:
+
+## Prerequisites :page_with_curl:
+
+Before installing the application, make sure you have the following requirements:
+
+- [Bun](https://bun.sh/) (1.1.31 or later)
+- [Docker Engine or Docker Desktop](https://www.docker.com/)
+
+## Installation Steps
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/AbdulrhmanGoni/LLMs-TDM-server.git
+   cd LLMs-TDM-server
+   ```
+
+2. Install dependencies:
+   ```
+   bun install
+   ```
+
+3. Set up the environment file:
+
+Copy `.env.example` to `.env.development`, `.env.test` and `.env.production` files and modify the variables in these files according to your settings
+
+```
+cp .env.example .env.development
+cp .env.example .env.test
+cp .env.example .env.production
+```
+
+  - `.env.development` file for development environment
+  - `.env.test` file for tests correctly
+  - `.env.production` file for production environment
+
+> Note: You can see more details about the environment variables inside `.env.example` file
+
+4. Start the server:
+   - Starting the server in development environment:
+
+     ```
+     bun dev
+     ```
+
+The server should now be available at `http://localhost:9000` (or the port you specified).
+
+
