@@ -9,7 +9,7 @@ try {
     websocket: websocketRequestsHandlers,
     // @ts-ignore
     static: {
-      "/api/health-check": new Response(`"Everything is good!"`),
+      "/api/health-check": new Response("Everything is good!"),
     },
   });
   console.log("server running on:", server.url.href, "🚀");
