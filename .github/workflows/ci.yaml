@@ -1,11 +1,11 @@
-name: Tests Workflow 
+name: Continous Integration Workflow 
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  setup-and-run-tests:
+  run-tests-and-collect-coverage:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
