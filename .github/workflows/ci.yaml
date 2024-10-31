@@ -26,7 +26,25 @@ jobs:
         run: bun test --coverage --coverage-reporter=lcov
 
       - name: Upload code coverage to Codecov
+        if: github.ref_name == 'main'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.info
+
+  build-and-deploy:
+    if: github.ref_name == 'main'
+    needs: run-tests-and-collect-coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/llms-tdm-server .
+
+      - name: Log in to Docker hub
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: Push the Docker Image to Docker hub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/llms-tdm-server
