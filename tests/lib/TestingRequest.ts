@@ -1,9 +1,9 @@
 import type { Server } from "bun";
 
 export default class TestingRequest {
-  constructor(private server: Server) {}
+  constructor(private server: Server) { }
 
-  async returnRespons(res: Response) {
+  async returnResponse(res: Response) {
     return {
       resBody: await res.json(),
       status: res.status,
@@ -11,7 +11,7 @@ export default class TestingRequest {
   }
 
   async GET(path: string) {
-    return fetch(`${this.server.url.origin}/${path}`).then(this.returnRespons);
+    return fetch(`${this.server.url.origin}/${path}`).then(this.returnResponse);
   }
 
   async POST(path: string, body: Record<string, any> | string) {
@@ -20,7 +20,7 @@ export default class TestingRequest {
       method: "POST",
     };
     return fetch(`${this.server.url.origin}/${path}`, init).then(
-      this.returnRespons
+      this.returnResponse
     );
   }
 
@@ -29,7 +29,7 @@ export default class TestingRequest {
       method: "DELETE",
     };
     return fetch(`${this.server.url.origin}/${path}`, init).then(
-      this.returnRespons
+      this.returnResponse
     );
   }
 
@@ -39,7 +39,7 @@ export default class TestingRequest {
       method: "PATCH",
     };
     return fetch(`${this.server.url.origin}/${path}`, init).then(
-      this.returnRespons
+      this.returnResponse
     );
   }
 
@@ -49,7 +49,7 @@ export default class TestingRequest {
       method: "PUT",
     };
     return fetch(`${this.server.url.origin}/${path}`, init).then(
-      this.returnRespons
+      this.returnResponse
     );
   }
 }

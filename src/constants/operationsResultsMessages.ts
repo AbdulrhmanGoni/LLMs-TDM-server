@@ -41,13 +41,14 @@ const operationsResultsMessages = {
     "Your huggingface account was created successfully",
   failedHuggingfaceAccountCreation: "Failed to create Your huggingface account",
   failedHuggingfaceOAuthProcess:
-    "Huggingface OAuth callback failed to complate",
+    "Huggingface OAuth callback failed to complete",
   noHuggingfaceAccount: "You don't have a linked huggingface account",
   successullyDatasetUpload:
     "The dataset has been uploaded to the repository successfully",
   noLinkedDatasetRepository: "The dataset has no linked huggingface repository",
   successfulDatasetSyncWithRepository:
     "The Dataset has been synced with the repository successfully",
+  failedAccessTokenRefreshing: "Failed to refresh user's Huggingface access token"
 };
 
 export default operationsResultsMessages;
