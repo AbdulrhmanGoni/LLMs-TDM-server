@@ -4,7 +4,7 @@ LLMs Training Datasets Manager is a web application for creating and managing tr
 with different formats for training Large Language Models (LLMs)
 or for using them in Retrieval Augmented Generation (RAG) systems.
 
-[![Tests Workflow](https://github.com/AbdulrhmanGoni/LLMs-TDM-server/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/AbdulrhmanGoni/LLMs-TDM-server/actions/workflows/tests.yaml)
+[![CI Workflow](https://github.com/AbdulrhmanGoni/LLMs-TDM-server/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/AbdulrhmanGoni/LLMs-TDM-server/actions/workflows/tests.yaml)
 [![Code Coverage](https://codecov.io/gh/AbdulrhmanGoni/LLMs-TDM-server/branch/main/graph/badge.svg?token=QVHBAOJBBO)](https://app.codecov.io/gh/AbdulrhmanGoni/LLMs-TDM-server)
 
 # Features :sparkles:
