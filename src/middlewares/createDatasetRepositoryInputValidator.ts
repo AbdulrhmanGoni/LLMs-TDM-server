@@ -12,7 +12,10 @@ const datasetRepositorySchema = validationSchema<CreateDatasetRepositoryInput>({
 
 export default function createDatasetRepositoryInputValidator(request: Req) {
   try {
-    request.json = datasetRepositorySchema.validate(request.json);
+    request.json = datasetRepositorySchema.validate({
+      name: request.json.name,
+      license: request.json.license
+    });
   } catch (e: any) {
     const validationErrors = e.errors as ValidationError["errors"];
     return ErrorResponse({ validationErrors }, 403);
