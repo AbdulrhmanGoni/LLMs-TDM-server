@@ -6,7 +6,7 @@ import type { CreateDatasetRepositoryInput } from "../../types/huggingface";
 export default async function createDatasetRepository_service(
   this: HuggingfaceService,
   userId: string,
-  { name, license = "mit" }: CreateDatasetRepositoryInput
+  { name, license }: CreateDatasetRepositoryInput
 ) {
   const {
     isSuccess,

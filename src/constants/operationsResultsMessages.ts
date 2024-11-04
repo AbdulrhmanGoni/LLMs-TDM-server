@@ -41,7 +41,7 @@ const operationsResultsMessages = {
     "Your huggingface account was created successfully",
   failedHuggingfaceAccountCreation: "Failed to create Your huggingface account",
   failedHuggingfaceOAuthProcess:
-    "Huggingface OAuth callback failed to complate",
+    "Huggingface OAuth callback failed to complete",
   noHuggingfaceAccount: "You don't have a linked huggingface account",
   successullyDatasetUpload:
     "The dataset has been uploaded to the repository successfully",
