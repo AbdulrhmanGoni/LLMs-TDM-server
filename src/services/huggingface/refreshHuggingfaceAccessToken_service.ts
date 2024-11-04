@@ -1,6 +1,7 @@
 import DatasetsModel from "../../models/DatasetsModel";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import { refreshAccessToken } from "./huggingFaceOAuthTokenRequests";
+import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function refreshHuggingfaceAccessToken_service(
   userId: string,
@@ -34,6 +35,6 @@ export default async function refreshHuggingfaceAccessToken_service(
   }
 
   return ServiceOperationResult.failure(
-    "Failed to refresh user's Huggingface access token"
+    operationsResultsMessages.failedAccessTokenRefreshing
   );
 }

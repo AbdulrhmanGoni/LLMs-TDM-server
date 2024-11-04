@@ -48,6 +48,7 @@ const operationsResultsMessages = {
   noLinkedDatasetRepository: "The dataset has no linked huggingface repository",
   successfulDatasetSyncWithRepository:
     "The Dataset has been synced with the repository successfully",
+  failedAccessTokenRefreshing: "Failed to refresh user's Huggingface access token"
 };
 
 export default operationsResultsMessages;
