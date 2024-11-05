@@ -3,6 +3,7 @@ services:
     build: .
     container_name: development-server-container
     command: bun start:dev
+    image: llms-tdm:dev
     ports:
       - 9000:9000
     volumes:
