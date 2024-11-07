@@ -1,0 +1,7 @@
+coverage:
+  round: nearest
+
+ignore:
+  - ./src/configurations/*
+  - ./scripts/*
+  - ./tests/*
