@@ -6,6 +6,7 @@ import extractResourceName from "./extractResourceName";
 import extractSearchParams from "../utilities/extractSearchParams";
 import extractRequestBody from "../utilities/extractRequestBody";
 import type { Req, RequestHandler, WebSocketHandlers } from "../types/request";
+import crosHeadersSetters from "../utilities/crosHeadersSetters";
 
 export default async function serveRequests(
   request: Request,
@@ -16,6 +17,13 @@ export default async function serveRequests(
   const url = new URL(request.url);
   const path = url.pathname;
   const method = request.method;
+
+  // For the preflight requests by the browsers for CORS policy
+  if (method === "OPTIONS") {
+    const headers = new Headers()
+    crosHeadersSetters(headers)
+    return new Response("{}", { status: 200, headers })
+  }
 
   const requestMethodType = extractResourceName(path) === "ws" ? "WS" : method;
 
@@ -42,6 +50,7 @@ export default async function serveRequests(
         req,
         matchedRoute.handlers as RequestHandler[]
       );
+      res && crosHeadersSetters(res.headers)
       return res;
     }
   }
