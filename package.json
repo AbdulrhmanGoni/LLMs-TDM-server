@@ -19,7 +19,6 @@
   "dependencies": {
     "@clerk/backend": "^1.13.2",
     "@huggingface/hub": "^0.18.2",
-    "jose": "^5.8.0",
     "mongoose": "^8.5.3"
   },
   "license": "MIT"
