@@ -1,6 +1,8 @@
 services:
   primary-test-mongodb:
-    image: mongo
+    build:
+      context: mongodb
+    image: mongodb:v8
     networks:
       - testing-network
     container_name: primary-test-db
@@ -12,7 +14,9 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "test-llms-tdm-set" ]
 
   secondary-test-mongodb-1:
-    image: mongo
+    build:
+      context: mongodb
+    image: mongodb:v8
     networks:
       - testing-network
     container_name: secondary-test-db-1
@@ -21,7 +25,9 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "test-llms-tdm-set" ]
 
   secondary-test-mongodb-2:
-    image: mongo
+    build:
+      context: mongodb
+    image: mongodb:v8
     networks:
       - testing-network
     container_name: secondary-test-db-2
