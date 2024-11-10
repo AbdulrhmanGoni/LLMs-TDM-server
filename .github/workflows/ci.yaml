@@ -2,6 +2,11 @@ name: Continous Integration Workflow
 
 on:
   push:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'scripts/setupTestsEnvironment.ts'
+      - 'scripts/initializeReplSetOf.ts'
   workflow_dispatch:
 
 jobs:
