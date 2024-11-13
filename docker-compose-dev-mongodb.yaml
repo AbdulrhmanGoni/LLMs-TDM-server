@@ -1,8 +1,6 @@
 services:
   primary-dev-mongodb:
-    build:
-      context: mongodb
-    image: mongodb:v8
+    image: mongo:8.0.0
     volumes:
       - development-mongodb-data:/data/db
       - ./mongodb/scripts/initializingReplSetScript.js:/scripts/initializingReplSetScript.js
@@ -15,9 +13,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dev-llms-tdm-set" ]
 
   secondary-dev-mongodb-1:
-    build:
-      context: mongodb
-    image: mongodb:v8
+    image: mongo:8.0.0
     networks:
       - development-network
     container_name: secondary-dev-db-1
@@ -26,9 +22,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "dev-llms-tdm-set" ]
 
   secondary-dev-mongodb-2:
-    build:
-      context: mongodb
-    image: mongodb:v8
+    image: mongo:8.0.0
     networks:
       - development-network
     container_name: secondary-dev-db-2
