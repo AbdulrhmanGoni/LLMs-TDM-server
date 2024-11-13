@@ -25,8 +25,8 @@ export default async function authentication(request: Req) {
     });
 
     if (isSignedIn) {
-      const authObject = toAuth() as SignedInAuthObject & { userPrimaryEmail: string };
-      request.userId = authObject.userPrimaryEmail;
+      const authObject = toAuth()
+      request.userId = authObject.sessionClaims.userPrimaryEmail as string;
     } else {
       return ErrorResponse("You are not authorized", 401);
     }
