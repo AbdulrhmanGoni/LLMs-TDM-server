@@ -14,7 +14,7 @@
     "dev": "bun scripts/startDevelopmentServer.ts",
     "docker:dev": "docker compose -f docker-compose-dev-server.yaml up -d",
 
-    "stage": "bun --env-file=.env.production scripts/startStagingServer.ts",
+    "stage": "bun --env-file=.env.staging scripts/startStagingServer.ts",
     "deploy:stage": "docker stack deploy -d -c docker-compose-stage-server.yaml llms-tdm-staging",
     "build:stage": "docker build -t localhost:5000/llms-tdm-server:stage .",
     "push:stage": "docker push localhost:5000/llms-tdm-server:stage",

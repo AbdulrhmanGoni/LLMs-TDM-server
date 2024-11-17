@@ -4,6 +4,8 @@ services:
     command: bun start
     env_file:
       - .env.staging
+    environment:
+      - NODE_ENV=staging
     networks:
       - staging-network
     deploy:
