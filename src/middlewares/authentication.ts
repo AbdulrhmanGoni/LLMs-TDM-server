@@ -3,6 +3,14 @@ import ErrorResponse from "../utilities/ErrorResponse";
 import InternalServerErrorResponse from "../utilities/InternalServerErrorResponse";
 import type { Req } from "../types/request";
 
+if (process.env.NODE_ENV === "staging" || process.env.NODE_ENV === "production") {
+  process.env.CLERK_JWT_KEY = process.env.CLERK_JWT_KEY?.replaceAll(/("|\\n)/g, (char) => {
+    if (char === '\\n') return "\n";
+    if (char === '"') return "";
+    return char
+  })
+}
+
 const clerkClient =
   process.env.NODE_ENV !== "test" &&
   createClerkClient({
