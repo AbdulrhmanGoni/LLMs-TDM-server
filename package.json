@@ -9,11 +9,18 @@
   },
   "scripts": {
     "start": "bun src/index.ts",
+
     "start:dev": "bun --watch src/index.ts",
     "dev": "bun scripts/startDevelopmentServer.ts",
     "docker:dev": "docker compose -f docker-compose-dev-server.yaml up -d",
-    "prod": "bun --env-file=.env.production scripts/startProductionServer.ts",
-    "docker:prod": "docker compose -f docker-compose-prod-server.yaml up -d --scale production-server=3"
+
+    "stage": "bun --env-file=.env.staging scripts/startStagingServer.ts",
+    "deploy:stage": "docker stack deploy -d -c docker-compose-stage-server.yaml llms-tdm-staging",
+    "build:stage": "docker build -t localhost:5000/llms-tdm-server:stage .",
+    "push:stage": "docker push localhost:5000/llms-tdm-server:stage",
+    "update:stage": "docker service update --image localhost:5000/llms-tdm-server:stage llms-tdm-staging_server",
+    "sync:stage": "bun build:stage && bun push:stage && bun update:stage",
+    "stop-stage": "bun scripts/stopStagingServer.ts"
   },
   "type": "module",
   "dependencies": {

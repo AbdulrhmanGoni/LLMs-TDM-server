@@ -1,10 +1,10 @@
 node_modules/
 bun.lockb
 .env
-.env.development
-.env.test
-.env.production
+.env.*
+!.env.example
 coverage
 mongo/
 logs/
 .vscode
+db-auth-keyfile.txt

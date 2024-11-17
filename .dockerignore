@@ -12,3 +12,4 @@ mongodb/
 scripts/
 tests/
 logs/
+nginx/

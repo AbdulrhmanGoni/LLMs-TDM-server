@@ -1,0 +1,7 @@
+networks:
+  staging-network:
+    external: true
+    name: staging-network
+
+include:
+  - docker-compose-mongodb.yaml
