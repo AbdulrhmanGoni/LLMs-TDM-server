@@ -1,0 +1,7 @@
+networks:
+  production-network:
+    external: true
+    name: production-network
+
+include:
+  - docker-compose-mongodb.yaml
