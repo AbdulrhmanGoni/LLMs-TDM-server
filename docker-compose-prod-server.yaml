@@ -1,6 +1,6 @@
 services:
   server:
-    image: abdulrahmangoni/llms-tdm-server:prod
+    image: abdulrahmangoni/llms-tdm-server:latest
     command: bun start
     env_file:
       - .env.production
