@@ -7,7 +7,7 @@ await $`docker network rm -f production-network`;
 
 await $`docker network create --scope=swarm -d overlay --attachable production-network`;
 
-await $`docker compose -f docker-compose-prod-mongodb.yaml up -d`;
+await $`docker compose -f docker-compose-prod-mongodb.yaml up -d`.env({ ENVIRONMENT_NETWORK: "production-network" });
 
 await Promise.all([
     initializeReplSetOf("config-server1", "configsvrReplSet"),
