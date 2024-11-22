@@ -20,7 +20,14 @@
     "push:stage": "docker push localhost:5000/llms-tdm-server:stage",
     "update:stage": "docker service update --image localhost:5000/llms-tdm-server:stage llms-tdm-staging_server",
     "sync:stage": "bun build:stage && bun push:stage && bun update:stage",
-    "stop-stage": "bun scripts/stopStagingServer.ts"
+    "stop-stage": "bun scripts/stopStagingServer.ts",
+
+    "prod": "bun --env-file=.env.production scripts/startProductionServer.ts",
+    "deploy:prod": "docker stack deploy -d -c docker-compose-prod-server.yaml llms-tdm-production",
+    "build:prod": "docker build -t abdulrahmangoni/llms-tdm-server:latest .",
+    "push:prod": "docker push abdulrahmangoni/llms-tdm-server:latest",
+    "update:prod": "docker service update --image abdulrahmangoni/llms-tdm-server:latest llms-tdm-production_server",
+    "sync:prod": "bun build:prod && bun push:prod && bun update:prod"
   },
   "type": "module",
   "dependencies": {
