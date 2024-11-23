@@ -46,7 +46,22 @@ const DatasetSchema = new Schema<DatasetDocument>(
   }
 );
 
-const DatasetsSchema = new Schema(
+const ActivitySchema = {
+  dataset: {
+    type: Schema.Types.Mixed,
+    required: true,
+  },
+  activity: {
+    type: String,
+    required: true,
+  },
+  activityDate: {
+    type: Date,
+    required: true,
+  },
+};
+
+const UserSchema = new Schema(
   {
     _id: {
       type: String,
@@ -81,6 +96,24 @@ const DatasetsSchema = new Schema(
         _id: false,
       },
     },
+    datasetsActivities: {
+      type: [ActivitySchema],
+      default: [],
+      required: true,
+    },
+    instructionsActivities: {
+      type: [
+        {
+          ...ActivitySchema,
+          instruction: {
+            type: Schema.Types.Mixed,
+            required: true,
+          },
+        },
+      ],
+      default: [],
+      required: true,
+    },
   },
   {
     timestamps: false,
@@ -88,6 +121,6 @@ const DatasetsSchema = new Schema(
   }
 );
 
-const DatasetsModel = model("datasets", DatasetsSchema);
+const UserModel = model("user", UserSchema);
 
-export default DatasetsModel;
+export default UserModel;
