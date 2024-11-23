@@ -1,4 +1,4 @@
-import DatasetsModel from "../../models/DatasetsModel";
+import UserModel from "../../models/UserModel";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import { refreshAccessToken } from "./huggingFaceOAuthTokenRequests";
 import operationsResultsMessages from "../../constants/operationsResultsMessages";
@@ -10,7 +10,7 @@ export default async function refreshHuggingfaceAccessToken_service(
   const refreshTokenResult = await refreshAccessToken(refreshToken);
 
   if (refreshTokenResult.success) {
-    const updateResult = await DatasetsModel.findByIdAndUpdate(
+    const updateResult = await UserModel.findByIdAndUpdate(
       { _id: userId },
       {
         $set: {

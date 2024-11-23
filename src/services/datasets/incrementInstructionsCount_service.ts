@@ -1,6 +1,6 @@
 import { type ClientSession } from "mongoose";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
-import DatasetModel from "../../models/DatasetsModel";
+import DatasetModel from "../../models/UserModel";
 import type { Dataset } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import operationsResultsMessages from "../../constants/operationsResultsMessages";

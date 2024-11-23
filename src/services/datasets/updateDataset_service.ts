@@ -1,5 +1,5 @@
 import operationsResultsMessages from "../../constants/operationsResultsMessages";
-import DatasetModel from "../../models/DatasetsModel";
+import DatasetModel from "../../models/UserModel";
 import type { Dataset, UpdateDatasetInput } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
