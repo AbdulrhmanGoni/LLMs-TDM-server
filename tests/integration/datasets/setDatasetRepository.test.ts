@@ -1,6 +1,6 @@
 import { describe, expect, it, afterAll, beforeAll } from "bun:test";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 import databaseConnection from "../../../src/configurations/databaseConnection";
 import setDatasetRepository_service from "../../../src/services/datasets/setDatasetRepository_service";
@@ -12,9 +12,11 @@ let fakeDataset = {} as any;
 beforeAll(async () => {
   await databaseConnection();
   fakeDataset = getRandomFakeDataset();
-  await DatasetsModel.create({
+  await UserModel.create({
     _id: process.env.TESTING_USER_ID,
     datasets: [fakeDataset],
+    datasetsActivities: [],
+    instructionsActivities: [],
   });
 });
 
@@ -93,5 +95,5 @@ describe("Test `setDatasetRepository_service` service function", async () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

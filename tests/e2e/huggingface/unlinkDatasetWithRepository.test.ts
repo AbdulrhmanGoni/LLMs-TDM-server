@@ -1,5 +1,5 @@
 import { expect, describe, it, afterEach, afterAll, mock } from "bun:test";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import { fakeUserHuggingfaceAccount } from "../../fake-data/fakeUserHuggingfaceAccount";
 import { request } from "../..";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
@@ -31,10 +31,12 @@ describe(`POST /${path}`, () => {
       repository: datasetRepository
     }
 
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       huggingfaceAccount: fakeUserHuggingfaceAccount,
-      datasets: [fakeDataset]
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     })
 
     const { resBody, status } = await request.POST(
@@ -45,7 +47,7 @@ describe(`POST /${path}`, () => {
     expect(status).toBe(200)
     expect(resBody.data).toBeTrue()
 
-    const result = await DatasetsModel.findById(process.env.TESTING_USER_ID);
+    const result = await UserModel.findById(process.env.TESTING_USER_ID);
 
     expect(result?.datasets[0]?.repository).toBeUndefined()
   });
@@ -56,10 +58,12 @@ describe(`POST /${path}`, () => {
       repository: datasetRepository
     }
 
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       huggingfaceAccount: fakeUserHuggingfaceAccount,
-      datasets: [fakeDataset]
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     })
 
     const commit = {
@@ -89,7 +93,7 @@ describe(`POST /${path}`, () => {
       commitDescription: commit.description,
     })
 
-    const result = await DatasetsModel.findById(process.env.TESTING_USER_ID);
+    const result = await UserModel.findById(process.env.TESTING_USER_ID);
 
     expect(result?.datasets[0]?.repository).toBeUndefined()
   });
@@ -100,10 +104,12 @@ describe(`POST /${path}`, () => {
       repository: datasetRepository
     }
 
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       huggingfaceAccount: fakeUserHuggingfaceAccount,
-      datasets: [fakeDataset]
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     })
 
     const { resBody, status } = await request.POST(
@@ -120,14 +126,14 @@ describe(`POST /${path}`, () => {
         type: "dataset",
       },
     })
-    const result = await DatasetsModel.findById(process.env.TESTING_USER_ID);
+    const result = await UserModel.findById(process.env.TESTING_USER_ID);
 
     expect(result?.datasets[0]?.repository).toBeUndefined()
   });
 });
 
 afterEach(async () => {
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });
 
 afterAll(() => { mock.restore() });

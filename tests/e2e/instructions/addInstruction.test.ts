@@ -2,9 +2,8 @@ import { describe, expect, it, afterAll, afterEach } from "bun:test";
 import { request } from "../..";
 import { getRandomFakeInstruction } from "../../fake-data/fakeInstructions";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import InstructionModel from "../../../src/models/InstructionModel";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 import { Types } from "mongoose";
 
@@ -14,9 +13,11 @@ describe(`POST /${path}`, () => {
   it("Should add the instruction to the dataset successfully", async () => {
     const fakeDataset = getRandomFakeDataset();
 
-    await DatasetsModel.create({
-      datasets: [fakeDataset],
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     });
 
     const newInstruction = getRandomFakeInstruction(fakeDataset._id);
@@ -47,10 +48,6 @@ describe(`POST /${path}`, () => {
 });
 
 afterEach(async () => {
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
   await InstructionModel.deleteMany();
-});
-
-afterAll(async () => {
-  await RecentActivitiesModel.deleteMany();
 });

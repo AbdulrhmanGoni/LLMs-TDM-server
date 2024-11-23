@@ -1,15 +1,16 @@
 import { afterAll, describe, expect, it, beforeAll } from "bun:test";
 import { request } from "../..";
 import { fakeDatasets } from "../../fake-data/fakeDatasets";
-import DatasetsModel from "../../../src/models/DatasetsModel";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
+import UserModel from "../../../src/models/UserModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 import { emptyUpdateDatasetBodyMessage } from "../../../src/middlewares/updateDatasetInputValidator";
 
 beforeAll(async () => {
-  await DatasetsModel.create({
+  await UserModel.create({
     _id: process.env.TESTING_USER_ID,
     datasets: fakeDatasets,
+    datasetsActivities: [],
+    instructionsActivities: [],
   });
 });
 
@@ -81,6 +82,5 @@ describe(`PATCH /${path}`, () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
-  await RecentActivitiesModel.deleteMany();
+  await UserModel.deleteMany();
 });

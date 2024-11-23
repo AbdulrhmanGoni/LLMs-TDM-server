@@ -1,6 +1,6 @@
 import { describe, expect, it, afterAll, beforeAll, mock } from "bun:test";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import databaseConnection from "../../../src/configurations/databaseConnection";
 import huggingfaceService from "../../../src/services/huggingface";
 import { fakeUserHuggingfaceAccount } from "../../fake-data/fakeUserHuggingfaceAccount";
@@ -15,9 +15,11 @@ let fakeDataset = getRandomFakeDataset()
 
 beforeAll(async () => {
   await databaseConnection();
-  await DatasetsModel.create({
+  await UserModel.create({
     _id: process.env.TESTING_USER_ID,
     datasets: [fakeDataset],
+    datasetsActivities: [],
+    instructionsActivities: [],
     huggingfaceAccount: fakeUserHuggingfaceAccount
   })
 });
@@ -47,7 +49,7 @@ describe("Test `uploadDatasetRepository` service method", () => {
       commitDescription: "commit description",
     }
 
-    await DatasetsModel.updateOne(
+    await UserModel.updateOne(
       { _id: process.env.TESTING_USER_ID },
       {
         datasets: [
@@ -84,5 +86,5 @@ describe("Test `uploadDatasetRepository` service method", () => {
 
 afterAll(async () => {
   mock.restore()
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

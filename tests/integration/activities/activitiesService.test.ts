@@ -1,9 +1,8 @@
 import { describe, expect, it, afterAll, beforeAll } from "bun:test";
 import activitiesService from "../../../src/services/activities";
 import { fakeDatasets } from "../../fake-data/fakeDatasets";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
+import UserModel from "../../../src/models/UserModel";
 import { getFakeInstructions } from "../../fake-data/fakeInstructions";
-import DatasetsModel from "../../../src/models/DatasetsModel";
 import databaseConnection from "../../../src/configurations/databaseConnection";
 
 beforeAll(async () => {
@@ -22,7 +21,7 @@ describe("ActivitiesService class's methods", () => {
       "New Resource"
     );
 
-    const activitiesData = await RecentActivitiesModel.findOne({ _id: userId });
+    const activitiesData = await UserModel.findOne({ _id: userId });
 
     expect(activitiesData).toBeDefined();
     expect(activitiesData?._id).toBe(userId);
@@ -38,10 +37,10 @@ describe("ActivitiesService class's methods", () => {
     const fakeDataset = fakeDatasets[0];
     const fakeInstruction = getFakeInstructions(fakeDataset._id)[0];
 
-    await DatasetsModel.create({
-      datasets: [fakeDataset],
-      _id: userId,
-    });
+    await UserModel.updateOne(
+      { _id: userId },
+      { datasets: [fakeDataset] }
+    );
 
     await activitiesService.registerInstructionActivity(
       userId,
@@ -56,7 +55,7 @@ describe("ActivitiesService class's methods", () => {
       "Modification"
     );
 
-    const activitiesData = await RecentActivitiesModel.findOne({ _id: userId });
+    const activitiesData = await UserModel.findOne({ _id: userId });
 
     expect(activitiesData).toBeDefined();
     expect(activitiesData?._id).toBe(userId);
@@ -73,6 +72,5 @@ describe("ActivitiesService class's methods", () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
-  await RecentActivitiesModel.deleteMany();
+  await UserModel.deleteMany();
 });

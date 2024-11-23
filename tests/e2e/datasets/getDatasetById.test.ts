@@ -1,9 +1,8 @@
 import { describe, expect, it, afterAll } from "bun:test";
 import { request } from "../..";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import { fakeDatasets } from "../../fake-data/fakeDatasets";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
 import { Types } from "mongoose";
 
 const path = "datasets/:datasetId";
@@ -24,9 +23,11 @@ describe(`GET /${path}`, () => {
   it("Should return the targeted dataset by its id", async () => {
     const targetedDataset = fakeDatasets[0];
     const targetedDatasetId = targetedDataset._id.toHexString();
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       datasets: [targetedDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     });
 
     const { resBody, status } = await request.GET(
@@ -47,6 +48,5 @@ describe(`GET /${path}`, () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
-  await RecentActivitiesModel.deleteMany();
+  await UserModel.deleteMany();
 });

@@ -2,9 +2,8 @@ import { describe, expect, it, afterAll, afterEach } from "bun:test";
 import { request } from "../..";
 import { getFakeInstructions } from "../../fake-data/fakeInstructions";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import InstructionModel from "../../../src/models/InstructionModel";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 
 const path = "instructions";
@@ -13,9 +12,11 @@ describe(`DELETE /${path}`, () => {
   it("Should fail to delete the instruction because it doesn't inside the datase", async () => {
     const fakeDataset = getRandomFakeDataset();
 
-    await DatasetsModel.create({
-      datasets: [fakeDataset],
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     });
 
     const randomInstructionToDelete = "5f8d9f1a2d2a1f001d0e002e";
@@ -35,9 +36,11 @@ describe(`DELETE /${path}`, () => {
   it("Should delete the instruction from the dataset successfully", async () => {
     const fakeDataset = getRandomFakeDataset();
 
-    await DatasetsModel.create({
-      datasets: [fakeDataset],
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     });
 
     const fakeInstructions = getFakeInstructions(fakeDataset._id);
@@ -60,10 +63,9 @@ describe(`DELETE /${path}`, () => {
 });
 
 afterEach(async () => {
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });
 
 afterAll(async () => {
   await InstructionModel.deleteMany();
-  await RecentActivitiesModel.deleteMany();
 });

@@ -1,5 +1,5 @@
 import { expect, describe, it, afterAll, mock } from "bun:test";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import { fakeUserHuggingfaceAccount } from "../../fake-data/fakeUserHuggingfaceAccount";
 import { request } from "../..";
 
@@ -27,10 +27,12 @@ const path = "huggingface/datasets";
 
 describe(`GET /${path}`, () => {
   it("Should return an array of user's huggingface dataset repositories successfully", async () => {
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       huggingfaceAccount: fakeUserHuggingfaceAccount,
-      datasets: []
+      datasets: [],
+      datasetsActivities: [],
+      instructionsActivities: [],
     })
 
     const { resBody, status } = await request.GET(path)
@@ -50,5 +52,5 @@ describe(`GET /${path}`, () => {
 
 afterAll(async () => {
   mock.restore()
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

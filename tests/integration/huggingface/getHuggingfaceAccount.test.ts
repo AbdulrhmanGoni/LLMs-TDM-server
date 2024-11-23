@@ -1,6 +1,6 @@
 import { describe, expect, it, afterAll, beforeAll } from "bun:test";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import databaseConnection from "../../../src/configurations/databaseConnection";
 import huggingfaceService from "../../../src/services/huggingface";
 import { fakeUserHuggingfaceAccount } from "../../fake-data/fakeUserHuggingfaceAccount";
@@ -20,7 +20,7 @@ describe("Test `getHuggingfaceAccount` service method", () => {
   });
 
   it("Should return user's huggingface account successfully", async () => {
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       huggingfaceAccount: fakeUserHuggingfaceAccount
     })
@@ -41,5 +41,5 @@ describe("Test `getHuggingfaceAccount` service method", () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

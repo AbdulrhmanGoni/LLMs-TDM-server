@@ -1,6 +1,6 @@
 import { describe, expect, it, afterAll, beforeAll, mock } from "bun:test";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import databaseConnection from "../../../src/configurations/databaseConnection";
 import huggingfaceService from "../../../src/services/huggingface";
 
@@ -36,7 +36,7 @@ describe("Test `createHuggingfaceAccount` service method", () => {
   });
 
   it("Should create the huggingface account for the user", async () => {
-    await DatasetsModel.create({ _id: process.env.TESTING_USER_ID })
+    await UserModel.create({ _id: process.env.TESTING_USER_ID })
 
     const result = await huggingfaceService.createHuggingfaceAccount(
       process.env.TESTING_USER_ID,
@@ -50,5 +50,5 @@ describe("Test `createHuggingfaceAccount` service method", () => {
 
 afterAll(async () => {
   mock.restore()
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

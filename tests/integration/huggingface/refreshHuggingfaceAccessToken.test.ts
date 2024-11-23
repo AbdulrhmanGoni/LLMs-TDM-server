@@ -1,7 +1,7 @@
 import { describe, expect, it, afterAll, beforeAll, mock } from "bun:test";
 import databaseConnection from "../../../src/configurations/databaseConnection";
 import huggingfaceService from "../../../src/services/huggingface";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 import { fakeUserHuggingfaceAccount } from "../../fake-data/fakeUserHuggingfaceAccount";
 
@@ -24,7 +24,7 @@ describe("Test `refreshHuggingfaceAccessToken` service method", () => {
 
     global.fetch = mockFetch
 
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       huggingfaceAccount: fakeUserHuggingfaceAccount
     })
@@ -65,5 +65,5 @@ describe("Test `refreshHuggingfaceAccessToken` service method", () => {
 
 afterAll(async () => {
   global.fetch = originalFetch
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });
