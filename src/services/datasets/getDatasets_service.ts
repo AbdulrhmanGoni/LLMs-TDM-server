@@ -1,12 +1,12 @@
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
-import DatasetsModel from "../../models/DatasetsModel";
+import UserModel from "../../models/UserModel";
 import type { ServiceOperationResultType } from "../../types/response";
 import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
 export default async function getDatasets_service(
   userId: string
 ): Promise<ServiceOperationResultType> {
-  const result = await DatasetsModel.findOne({ _id: userId });
+  const result = await UserModel.findOne({ _id: userId }, { datasets: true });
 
   return ServiceOperationResult.success(
     result?.datasets || [],

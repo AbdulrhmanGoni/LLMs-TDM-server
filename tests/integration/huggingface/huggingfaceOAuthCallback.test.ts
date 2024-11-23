@@ -1,5 +1,5 @@
 import { expect, describe, it, afterAll, mock, beforeAll } from "bun:test";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import huggingfaceService from "../../../src/services/huggingface";
 import databaseConnection from "../../../src/configurations/databaseConnection";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
@@ -18,9 +18,11 @@ mock.module("@huggingface/hub", () => {
 
 beforeAll(async () => {
   await databaseConnection()
-  await DatasetsModel.create({
+  await UserModel.create({
     _id: process.env.TESTING_USER_ID,
-    datasets: []
+    datasets: [],
+    datasetsActivities: [],
+    instructionsActivities: [],
   })
 })
 
@@ -89,5 +91,5 @@ describe(`Test "huggingfaceOAuthCallback" service method`, () => {
 
 afterAll(async () => {
   global.fetch = originalFetch;
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

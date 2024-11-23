@@ -3,7 +3,7 @@ import { request } from "../..";
 import { getFakeInstructions } from "../../fake-data/fakeInstructions";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
 import type { Instruction } from "../../../src/types/instructions";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import InstructionModel from "../../../src/models/InstructionModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 
@@ -32,9 +32,11 @@ describe(`GET /${path}`, () => {
 
     const fakeDataset = getRandomFakeDataset();
 
-    await DatasetsModel.create({
-      datasets: [fakeDataset],
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     });
 
     await InstructionModel.insertMany(getFakeInstructions(fakeDataset._id));
@@ -64,6 +66,6 @@ describe(`GET /${path}`, () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
   await InstructionModel.deleteMany();
 });

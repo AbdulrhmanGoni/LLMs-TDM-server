@@ -1,5 +1,5 @@
 import { expect, describe, it, afterAll, mock } from "bun:test";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import { fakeUserHuggingfaceAccount } from "../../fake-data/fakeUserHuggingfaceAccount";
 import { request } from "../..";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
@@ -15,10 +15,12 @@ const path = "huggingface/datasets/:datasetId/push";
 describe(`POST /${path}`, () => {
   it("Should complete pushing a dataset to repository process successfully", async () => {
     const fakeDataset = getRandomFakeDataset()
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       huggingfaceAccount: fakeUserHuggingfaceAccount,
-      datasets: [fakeDataset]
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     })
 
     const datasetRepository = {
@@ -55,7 +57,7 @@ describe(`POST /${path}`, () => {
       accessToken: fakeUserHuggingfaceAccount.accessToken,
     })
 
-    const result = await DatasetsModel.findById(process.env.TESTING_USER_ID);
+    const result = await UserModel.findById(process.env.TESTING_USER_ID);
 
     expect(result?.datasets[0]?.repository).toMatchObject({
       name: datasetRepository.name,
@@ -69,5 +71,5 @@ describe(`POST /${path}`, () => {
 
 afterAll(async () => {
   mock.restore()
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

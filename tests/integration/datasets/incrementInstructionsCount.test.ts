@@ -1,6 +1,6 @@
 import { describe, expect, it, afterAll, beforeAll } from "bun:test";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import incrementInstructionsCount_service from "../../../src/services/datasets/incrementInstructionsCount_service";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 import databaseConnection from "../../../src/configurations/databaseConnection";
@@ -28,14 +28,19 @@ describe("Test `incrementInstructionsCount_service` service function", () => {
     const userId = process.env.TESTING_USER_ID;
     const fakeDataset = getRandomFakeDataset();
 
-    await DatasetsModel.create({ _id: userId, datasets: [fakeDataset] });
+    await UserModel.create({
+      _id: userId,
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
+    });
 
     await incrementInstructionsCount_service(
       process.env.TESTING_USER_ID,
       fakeDataset._id.toString()
     );
 
-    const dataset = await DatasetsModel.findOne({ _id: userId });
+    const dataset = await UserModel.findOne({ _id: userId });
 
     expect(dataset).toBeDefined();
     expect(dataset?._id).toBe(userId);
@@ -44,5 +49,5 @@ describe("Test `incrementInstructionsCount_service` service function", () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

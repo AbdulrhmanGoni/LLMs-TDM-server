@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { request } from "../..";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
+import UserModel from "../../../src/models/UserModel";
 import { afterAll } from "bun:test";
 import {
   fakeRecentDatasetActivities,
@@ -23,10 +23,11 @@ describe(`GET /${path}`, () => {
   });
 
   it("Should return an object contains activities arrays", async () => {
-    await RecentActivitiesModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       datasetsActivities: fakeRecentDatasetActivities,
       instructionsActivities: fakeRecentInstructionActivities,
+      datasets: []
     });
 
     const { resBody, status } = await request.GET(path);
@@ -75,5 +76,5 @@ function datasetCheck(dataset: DatasetActivity["dataset"]) {
 }
 
 afterAll(async () => {
-  await RecentActivitiesModel.deleteMany();
+  await UserModel.deleteMany();
 });

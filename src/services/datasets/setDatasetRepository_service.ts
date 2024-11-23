@@ -1,5 +1,5 @@
 import { Types, type ClientSession } from "mongoose";
-import DatasetsModel from "../../models/DatasetsModel";
+import UserModel from "../../models/UserModel";
 import type { Dataset, DatasetDocument } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
@@ -39,7 +39,7 @@ export default async function setDatasetRepository_service({
     };
   }
 
-  const data = await DatasetsModel.findByIdAndUpdate(
+  const userData = await UserModel.findByIdAndUpdate(
     { _id: userId },
     updateObject,
     {
@@ -49,7 +49,7 @@ export default async function setDatasetRepository_service({
     }
   );
 
-  const dataset = data?.datasets.find((dataset) => dataset.id === datasetId);
+  const dataset = userData?.datasets.find((dataset) => dataset.id === datasetId);
 
   if (dataset) {
     return ServiceOperationResult.success(dataset);

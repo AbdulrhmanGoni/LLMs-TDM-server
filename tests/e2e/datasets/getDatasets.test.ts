@@ -1,16 +1,17 @@
 import { describe, expect, it, afterAll, afterEach } from "bun:test";
 import { request } from "../..";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import { fakeDatasets } from "../../fake-data/fakeDatasets";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
 
 const path = "datasets";
 
 describe(`GET /${path}`, () => {
   it("Should return an ampty datasets array", async () => {
-    await DatasetsModel.create({
+    await UserModel.create({
       datasets: [],
+      datasetsActivities: [],
+      instructionsActivities: [],
       _id: process.env.TESTING_USER_ID,
     });
 
@@ -23,8 +24,10 @@ describe(`GET /${path}`, () => {
   });
 
   it("Should return an array of all datasets", async () => {
-    await DatasetsModel.create({
+    await UserModel.create({
       datasets: fakeDatasets,
+      datasetsActivities: [],
+      instructionsActivities: [],
       _id: process.env.TESTING_USER_ID,
     });
 
@@ -45,9 +48,5 @@ describe(`GET /${path}`, () => {
 });
 
 afterEach(async () => {
-  await DatasetsModel.deleteMany();
-});
-
-afterAll(async () => {
-  await RecentActivitiesModel.deleteMany();
+  await UserModel.deleteMany();
 });

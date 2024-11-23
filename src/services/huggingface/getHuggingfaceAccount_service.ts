@@ -1,4 +1,4 @@
-import DatasetsModel from "../../models/DatasetsModel";
+import UserModel from "../../models/UserModel";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import type { ServiceOperationResultType } from "../../types/response";
 import type { UserHuggingfaceAccount } from "../../types/huggingface";
@@ -9,7 +9,7 @@ export default async function getHuggingfaceAccount_service(
   this: HuggingfaceService,
   userId: string
 ): Promise<ServiceOperationResultType<UserHuggingfaceAccount>> {
-  const userData = await DatasetsModel.findById(userId, {
+  const userData = await UserModel.findById(userId, {
     huggingfaceAccount: 1,
   });
 

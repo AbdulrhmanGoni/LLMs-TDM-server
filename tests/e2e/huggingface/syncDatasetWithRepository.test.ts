@@ -1,5 +1,5 @@
 import { expect, describe, it, afterAll, mock } from "bun:test";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import { fakeUserHuggingfaceAccount } from "../../fake-data/fakeUserHuggingfaceAccount";
 import { request } from "../..";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
@@ -27,10 +27,12 @@ describe(`POST /${path}`, () => {
       repository: datasetRepository
     }
 
-    await DatasetsModel.create({
+    await UserModel.create({
       _id: process.env.TESTING_USER_ID,
       huggingfaceAccount: fakeUserHuggingfaceAccount,
-      datasets: [fakeDataset]
+      datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     })
 
     const commit = {
@@ -58,7 +60,7 @@ describe(`POST /${path}`, () => {
       accessToken: fakeUserHuggingfaceAccount.accessToken,
     })
 
-    const result = await DatasetsModel.findById(process.env.TESTING_USER_ID);
+    const result = await UserModel.findById(process.env.TESTING_USER_ID);
 
     expect(result?.datasets[0]?.repository?.isUpToDate).toBeTrue()
 
@@ -71,5 +73,5 @@ describe(`POST /${path}`, () => {
 
 afterAll(async () => {
   mock.restore()
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
 });

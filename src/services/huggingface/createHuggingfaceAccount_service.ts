@@ -1,5 +1,5 @@
 import { whoAmI, type WhoAmIUser } from "@huggingface/hub";
-import DatasetsModel from "../../models/DatasetsModel";
+import UserModel from "../../models/UserModel";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
 import operationsResultsMessages from "../../constants/operationsResultsMessages";
 
@@ -17,7 +17,7 @@ export default async function createHuggingfaceAccount_service(
     accessToken: credentials.hfAccessToken,
   })) as WhoAmIUser;
 
-  const { modifiedCount } = await DatasetsModel.updateOne(
+  const { modifiedCount } = await UserModel.updateOne(
     { _id: userId },
     {
       $set: {

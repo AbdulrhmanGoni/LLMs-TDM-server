@@ -1,8 +1,7 @@
 import { afterAll, describe, expect, it } from "bun:test";
 import { request } from "../..";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
-import DatasetsModel from "../../../src/models/DatasetsModel";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
+import UserModel from "../../../src/models/UserModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 import maxDatasetsForUser from "../../../src/constants/maxDatasetsForUser";
 
@@ -33,7 +32,7 @@ describe(`POST /${path}`, () => {
       testingDatasets.push(getRandomFakeDataset());
     }
 
-    await DatasetsModel.updateOne(
+    await UserModel.updateOne(
       { _id: process.env.TESTING_USER_ID },
       { $set: { datasets: testingDatasets } }
     );
@@ -57,6 +56,5 @@ describe(`POST /${path}`, () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
-  await RecentActivitiesModel.deleteMany();
+  await UserModel.deleteMany();
 });

@@ -1,9 +1,8 @@
 import { afterAll, describe, expect, it } from "bun:test";
 import { request } from "../..";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
-import DatasetsModel from "../../../src/models/DatasetsModel";
+import UserModel from "../../../src/models/UserModel";
 import InstructionModel from "../../../src/models/InstructionModel";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 import { emptyUpdateInstructionBodyMessage } from "../../../src/middlewares/updateInstructionInputValidator";
 import { getFakeInstructions } from "../../fake-data/fakeInstructions";
@@ -14,9 +13,11 @@ describe(`PATCH /${path}`, async () => {
   const fakeDataset = getRandomFakeDataset();
   const fakeDatasetId = fakeDataset._id;
   const fakeInstructions = getFakeInstructions(fakeDatasetId);
-  await DatasetsModel.create({
+  await UserModel.create({
     _id: process.env.TESTING_USER_ID,
     datasets: [fakeDataset],
+    datasetsActivities: [],
+    instructionsActivities: [],
   });
   await InstructionModel.insertMany(fakeInstructions);
 
@@ -101,7 +102,6 @@ describe(`PATCH /${path}`, async () => {
 });
 
 afterAll(async () => {
-  await DatasetsModel.deleteMany();
+  await UserModel.deleteMany();
   await InstructionModel.deleteMany();
-  await RecentActivitiesModel.deleteMany();
 });

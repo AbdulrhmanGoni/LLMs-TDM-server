@@ -1,8 +1,7 @@
 import { afterAll, describe, expect, it, afterEach } from "bun:test";
 import { request } from "../..";
 import { getRandomFakeDataset } from "../../fake-data/fakeDatasets";
-import DatasetsModel from "../../../src/models/DatasetsModel";
-import RecentActivitiesModel from "../../../src/models/RecentActivitiesModel";
+import UserModel from "../../../src/models/UserModel";
 import operationsResultsMessages from "../../../src/constants/operationsResultsMessages";
 
 const path = "datasets";
@@ -11,8 +10,10 @@ describe(`DELETE /${path}`, () => {
   it("Should response an error because the dataset is not existent", async () => {
     const fakeDataset = getRandomFakeDataset();
 
-    await DatasetsModel.create({
+    await UserModel.create({
       datasets: [],
+      datasetsActivities: [],
+      instructionsActivities: [],
       _id: process.env.TESTING_USER_ID,
     });
 
@@ -29,8 +30,10 @@ describe(`DELETE /${path}`, () => {
   it("Should delete the dataset successflly", async () => {
     const fakeDataset = getRandomFakeDataset();
 
-    await DatasetsModel.create({
+    await UserModel.create({
       datasets: [fakeDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
       _id: process.env.TESTING_USER_ID,
     });
 
@@ -46,9 +49,5 @@ describe(`DELETE /${path}`, () => {
 });
 
 afterEach(async () => {
-  await DatasetsModel.deleteMany();
-});
-
-afterAll(async () => {
-  await RecentActivitiesModel.deleteMany();
+  await UserModel.deleteMany();
 });

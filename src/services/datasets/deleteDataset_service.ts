@@ -1,5 +1,5 @@
 import operationsResultsMessages from "../../constants/operationsResultsMessages";
-import DatasetsModel from "../../models/DatasetsModel";
+import UserModel from "../../models/UserModel";
 import type { Dataset } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import createTransactionSession from "../../utilities/createTransactionSession";
@@ -13,7 +13,7 @@ export default async function deleteDataset_service(
 ): Promise<ServiceOperationResultType> {
   const session = await createTransactionSession();
 
-  const result = await DatasetsModel.findByIdAndUpdate(
+  const result = await UserModel.findByIdAndUpdate(
     { _id: userId },
     { $pull: { datasets: { _id: datasetId } } },
     { projection: { datasets: 1 }, session }

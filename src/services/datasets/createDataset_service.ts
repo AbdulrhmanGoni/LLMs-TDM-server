@@ -1,4 +1,4 @@
-import DatasetsModel from "../../models/DatasetsModel";
+import UserModel from "../../models/UserModel";
 import { DatasetDocument, type DatasetInput } from "../../types/datasets";
 import type { ServiceOperationResultType } from "../../types/response";
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
@@ -12,23 +12,25 @@ export default async function createDataset_service(
 ): Promise<ServiceOperationResultType> {
   const newDataset = new DatasetDocument(dataset);
 
-  const userDatasets = await DatasetsModel.findById(
+  const userData = await UserModel.findById(
     userId,
     {},
     { upsert: true }
   );
 
-  if (!userDatasets) {
-    await DatasetsModel.create({
+  if (!userData) {
+    await UserModel.create({
       _id: userId,
       datasets: [newDataset],
+      datasetsActivities: [],
+      instructionsActivities: [],
     });
     return successfulDatasetCreation(userId, newDataset);
   }
 
-  if (userDatasets.datasets.length < maxDatasetsForUser) {
-    userDatasets.datasets.push(newDataset);
-    await userDatasets.save();
+  if (userData.datasets.length < maxDatasetsForUser) {
+    userData.datasets.push(newDataset);
+    await userData.save();
     return successfulDatasetCreation(userId, newDataset);
   } else {
     return ServiceOperationResult.failure(

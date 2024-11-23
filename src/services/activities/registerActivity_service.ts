@@ -1,5 +1,5 @@
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
-import RecentActivitiesModel from "../../models/RecentActivitiesModel";
+import UserModel from "../../models/UserModel";
 import type { Activity, ActivityResource } from "../../types/activities";
 import type { ServiceOperationResultType } from "../../types/response";
 import operationsResultsMessages from "../../constants/operationsResultsMessages";
@@ -19,7 +19,7 @@ export default async function registerActivity_service(
     },
   };
 
-  const result = await RecentActivitiesModel.updateOne(
+  const result = await UserModel.updateOne(
     { _id: userId },
     updateQuery,
     { upsert: true }

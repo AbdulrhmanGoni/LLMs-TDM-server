@@ -1,5 +1,5 @@
 import ServiceOperationResult from "../../utilities/ServiceOperationResult";
-import DatasetModel from "../../models/DatasetsModel";
+import DatasetModel from "../../models/UserModel";
 import type { ServiceOperationResultType } from "../../types/response";
 
 export default async function datasetsOverview_service(
@@ -35,8 +35,8 @@ export default async function datasetsOverview_service(
     result
       ? result
       : {
-          totalDatasets: 0,
-          addedDatasetsLastMonth: 0,
-        }
+        totalDatasets: 0,
+        addedDatasetsLastMonth: 0,
+      }
   );
 }
