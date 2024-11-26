@@ -1,4 +1,5 @@
 import huggingfaceService from "../../services/huggingface";
+import loggerService from "../../services/logger";
 import type { Req } from "../../types/request";
 import ErrorResponse from "../../utilities/ErrorResponse";
 import InternalServerErrorResponse from "../../utilities/InternalServerErrorResponse";
@@ -13,15 +14,20 @@ export default async function getHuggingfaceAccount_controller(request: Req) {
       return SuccessResponse(
         result
           ? {
-              username: result.username,
-              emailVerified: result.emailVerified,
-            }
+            username: result.username,
+            emailVerified: result.emailVerified,
+          }
           : undefined
       );
     } else {
       return ErrorResponse(message as string);
     }
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      operation: getHuggingfaceAccount_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }

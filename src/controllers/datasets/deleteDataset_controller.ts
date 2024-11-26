@@ -3,6 +3,7 @@ import InternalServerErrorResponse from "../../utilities/InternalServerErrorResp
 import SuccessResponse from "../../utilities/SuccessResponse";
 import datasetsService from "../../services/datasets";
 import type { Req } from "../../types/request";
+import loggerService from "../../services/logger";
 
 export default async function deleteDataset_controller(
   request: Req
@@ -19,6 +20,12 @@ export default async function deleteDataset_controller(
       return ErrorResponse(message || "Dataset deletion failed");
     }
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      datasetId: request.params.datasetId,
+      operation: deleteDataset_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }

@@ -3,6 +3,7 @@ import InternalServerErrorResponse from "../../utilities/InternalServerErrorResp
 import SuccessResponse from "../../utilities/SuccessResponse";
 import instructionsService from "../../services/instructions";
 import type { Req } from "../../types/request";
+import loggerService from "../../services/logger";
 
 export default async function addInstruction_controller(
   request: Req
@@ -19,6 +20,12 @@ export default async function addInstruction_controller(
       400
     );
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      datasetId: request.json.datasetId,
+      operation: addInstruction_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }

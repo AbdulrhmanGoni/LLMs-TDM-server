@@ -4,6 +4,7 @@ import SuccessResponse from "../../utilities/SuccessResponse";
 import instructionsService from "../../services/instructions";
 import type { Req } from "../../types/request";
 import { isValidObjectId } from "mongoose";
+import loggerService from "../../services/logger";
 
 export default async function getInstructions_controller(
   request: Req
@@ -29,6 +30,12 @@ export default async function getInstructions_controller(
       return ErrorResponse("The passed id is not a valid id");
     }
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      datasetId: request.search.datasetId,
+      operation: getInstructions_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }

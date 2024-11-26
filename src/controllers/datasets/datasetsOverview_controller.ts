@@ -2,6 +2,7 @@ import InternalServerErrorResponse from "../../utilities/InternalServerErrorResp
 import SuccessResponse from "../../utilities/SuccessResponse";
 import datasetsService from "../../services/datasets";
 import type { Req } from "../../types/request";
+import loggerService from "../../services/logger";
 
 export default async function datasetsOverview_controller(
   request: Req
@@ -12,6 +13,11 @@ export default async function datasetsOverview_controller(
     );
     return SuccessResponse(result, message);
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      operation: datasetsOverview_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }
