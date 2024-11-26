@@ -1,4 +1,5 @@
 import huggingfaceService from "../../services/huggingface";
+import loggerService from "../../services/logger";
 import type { Req } from "../../types/request";
 import ErrorResponse from "../../utilities/ErrorResponse";
 import SuccessResponse from "../../utilities/SuccessResponse";
@@ -23,11 +24,16 @@ export default async function huggingfaceOAuthCallback_controller(
       });
     }
   } catch {
+    const message = "Unexpected error happened while huggingface OAuth process.";
+    loggerService.error(message, {
+      userId: request.userId,
+      datasetId: request.search.datasetId,
+      operation: huggingfaceOAuthCallback_controller.name,
+    })
     return ErrorResponse({
       datasetId: request.search.datasetId,
       error: "Internal Server Error",
-      error_description:
-        "Unexpected internal server error happened while huggingface OAuth process.",
+      error_description: message,
     });
   }
 }

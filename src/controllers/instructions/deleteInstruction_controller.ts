@@ -3,6 +3,7 @@ import InternalServerErrorResponse from "../../utilities/InternalServerErrorResp
 import SuccessResponse from "../../utilities/SuccessResponse";
 import instructionsService from "../../services/instructions";
 import type { Req } from "../../types/request";
+import loggerService from "../../services/logger";
 
 export default async function deleteInstruction_controller(
   request: Req
@@ -23,6 +24,13 @@ export default async function deleteInstruction_controller(
       400
     );
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      datasetId: request.search.datasetId,
+      instructionId: request.search.instructionId,
+      operation: deleteInstruction_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }

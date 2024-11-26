@@ -3,6 +3,7 @@ import SuccessResponse from "../../utilities/SuccessResponse";
 import datasetsService from "../../services/datasets";
 import type { Req } from "../../types/request";
 import ErrorResponse from "../../utilities/ErrorResponse";
+import loggerService from "../../services/logger";
 
 export default async function getDatasetById_controller(
   request: Req
@@ -18,6 +19,12 @@ export default async function getDatasetById_controller(
       return ErrorResponse(message || "Error while getting the dataset");
     }
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      datasetId: request.params.datasetId,
+      operation: getDatasetById_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }

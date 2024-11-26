@@ -1,4 +1,5 @@
 import huggingfaceService from "../../services/huggingface";
+import loggerService from "../../services/logger";
 import type { Req } from "../../types/request";
 import ErrorResponse from "../../utilities/ErrorResponse";
 import InternalServerErrorResponse from "../../utilities/InternalServerErrorResponse";
@@ -15,6 +16,11 @@ export default async function getDatasetsRepositories_controller(request: Req) {
       return ErrorResponse(message as string);
     }
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      operation: getDatasetsRepositories_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }

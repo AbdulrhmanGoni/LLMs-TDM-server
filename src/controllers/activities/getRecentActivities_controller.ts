@@ -3,6 +3,7 @@ import InternalServerErrorResponse from "../../utilities/InternalServerErrorResp
 import SuccessResponse from "../../utilities/SuccessResponse";
 import type { Req } from "../../types/request";
 import activitiesService from "../../services/activities";
+import loggerService from "../../services/logger";
 
 export default async function getRecentActivities_controller(
   request: Req
@@ -20,6 +21,11 @@ export default async function getRecentActivities_controller(
       );
     }
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      operation: getRecentActivities_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }

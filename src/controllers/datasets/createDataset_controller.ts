@@ -3,6 +3,7 @@ import InternalServerErrorResponse from "../../utilities/InternalServerErrorResp
 import SuccessResponse from "../../utilities/SuccessResponse";
 import datasetsService from "../../services/datasets";
 import type { Req } from "../../types/request";
+import loggerService from "../../services/logger";
 
 export default async function createDataset_controller(
   request: Req
@@ -19,6 +20,11 @@ export default async function createDataset_controller(
       return ErrorResponse(message || "Dataset creation failed");
     }
   } catch {
-    return InternalServerErrorResponse();
+    const message = "Unexpected internal server error";
+    loggerService.error(message, {
+      userId: request.userId,
+      operation: createDataset_controller.name,
+    })
+    return InternalServerErrorResponse(message);
   }
 }
