@@ -10,7 +10,7 @@ export default class Validator<T> {
   }
 
   validate(value: T, field?: string): string | true {
-    if (value === undefined) {
+    if (value === undefined || value === "") {
       if (this.isOptional) {
         return true;
       } else {
