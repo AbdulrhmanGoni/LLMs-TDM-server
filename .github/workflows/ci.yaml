@@ -53,3 +53,6 @@ jobs:
 
       - name: Push the Docker Image to Docker hub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/llms-tdm-server
+
+      - name: Trigger deploy event for the server
+        run: curl ${{ secrets.DEPLOY_HOOK_URL }}
