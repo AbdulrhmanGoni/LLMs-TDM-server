@@ -8,16 +8,15 @@ function CSV_Formater({
   answer,
 }: InstructionBase): string {
   return (
-    `"${systemMessage ? sanitizer(systemMessage) + ". " : ""}` +
-    `### Prompt: ${sanitizer(question)}. ` +
-    `### Response: ${sanitizer(answer)}." \n`
+    `"${systemMessage ? sanitizer(systemMessage) : ""}",` +
+    `"${sanitizer(question)}","${sanitizer(answer)}"\n`
   );
 }
 
 const QAFormat: DatasetFormat = {
   formater: CSV_Formater,
   decorators: {
-    first: "text\n",
+    first: "system,prompt,response\n",
   },
 };
 
