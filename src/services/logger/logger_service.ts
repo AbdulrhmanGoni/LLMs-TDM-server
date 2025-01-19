@@ -1,5 +1,12 @@
+import { mkdirSync } from "node:fs";
 import { appendFile } from "node:fs/promises";
 import type { LogDetails } from "../../types/logging";
+
+try {
+  mkdirSync("logs")
+} catch {
+  // 
+}
 
 export default async function logger_service(log: LogDetails) {
   const timestamp = new Date().toISOString();
